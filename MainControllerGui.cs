@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace bubblegum_sequencer
 {
-    public partial class Form1 : Form
+    public partial class MainControllerGui : Form
     {
-        public Form1()
+        public MainControllerGui()
         {
             InitializeComponent();
         }
