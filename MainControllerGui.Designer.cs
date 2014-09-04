@@ -1,6 +1,6 @@
 ﻿namespace bubblegum_sequencer
 {
-    partial class Form1
+    partial class MainControllerGui
     {
         /// <summary>
         /// Erforderliche Designervariable.
