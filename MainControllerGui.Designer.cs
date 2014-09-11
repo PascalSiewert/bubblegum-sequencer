@@ -106,7 +106,6 @@
             0,
             0,
             0});
-            this.numBPM.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // lblTact
             // 
@@ -132,7 +131,6 @@
             this.tbVolume.Name = "tbVolume";
             this.tbVolume.Size = new System.Drawing.Size(104, 45);
             this.tbVolume.TabIndex = 4;
-            this.tbVolume.Scroll += new System.EventHandler(this.tbVolume_Scroll);
             // 
             // btnRecord
             // 
@@ -179,7 +177,6 @@
             this.chkFiltered.TabIndex = 1;
             this.chkFiltered.Text = "gefiltert";
             this.chkFiltered.UseVisualStyleBackColor = true;
-            this.chkFiltered.CheckedChanged += new System.EventHandler(this.chkFiltered_CheckedChanged);
             // 
             // picSequence
             // 
@@ -196,7 +193,6 @@
             this.lstCoTo.Name = "lstCoTo";
             this.lstCoTo.Size = new System.Drawing.Size(175, 316);
             this.lstCoTo.TabIndex = 3;
-            this.lstCoTo.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // mnuBar
             // 

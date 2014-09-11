@@ -15,25 +15,5 @@ namespace bubblegum_sequencer
         {
             InitializeComponent();
         }
-
-        private void chkFiltered_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tbVolume_Scroll(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
