@@ -29,11 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnPause = new System.Windows.Forms.Button();
-            this.btnPlay = new System.Windows.Forms.Button();
-            this.btnRecord = new System.Windows.Forms.Button();
+            this.txtTact = new System.Windows.Forms.TextBox();
+            this.numBPM = new System.Windows.Forms.NumericUpDown();
+            this.lblTact = new System.Windows.Forms.Label();
+            this.lblBPM = new System.Windows.Forms.Label();
             this.tbVolume = new System.Windows.Forms.TrackBar();
+            this.btnRecord = new System.Windows.Forms.Button();
+            this.btnPlay = new System.Windows.Forms.Button();
+            this.btnPause = new System.Windows.Forms.Button();
+            this.btnStop = new System.Windows.Forms.Button();
             this.chkFiltered = new System.Windows.Forms.CheckBox();
             this.picSequence = new System.Windows.Forms.PictureBox();
             this.lstCoTo = new System.Windows.Forms.ListBox();
@@ -41,15 +45,18 @@
             this.mnuBarFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblBPM = new System.Windows.Forms.Label();
-            this.lblTact = new System.Windows.Forms.Label();
-            this.numBPM = new System.Windows.Forms.NumericUpDown();
-            this.txtTact = new System.Windows.Forms.TextBox();
+            this.mnuBarEditOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarFileSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarFileExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuBarFileExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarHelpHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSequence)).BeginInit();
             this.mnuBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -70,32 +77,62 @@
             this.panel1.Size = new System.Drawing.Size(777, 52);
             this.panel1.TabIndex = 0;
             // 
-            // btnStop
+            // txtTact
             // 
-            this.btnStop.Location = new System.Drawing.Point(412, 9);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(46, 31);
-            this.btnStop.TabIndex = 0;
-            this.btnStop.Text = "Stop";
-            this.btnStop.UseVisualStyleBackColor = true;
+            this.txtTact.Location = new System.Drawing.Point(703, 27);
+            this.txtTact.Name = "txtTact";
+            this.txtTact.ReadOnly = true;
+            this.txtTact.Size = new System.Drawing.Size(46, 20);
+            this.txtTact.TabIndex = 8;
             // 
-            // btnPause
+            // numBPM
             // 
-            this.btnPause.Location = new System.Drawing.Point(464, 9);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(46, 31);
-            this.btnPause.TabIndex = 1;
-            this.btnPause.Text = "Pause";
-            this.btnPause.UseVisualStyleBackColor = true;
+            this.numBPM.Location = new System.Drawing.Point(703, 3);
+            this.numBPM.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numBPM.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numBPM.Name = "numBPM";
+            this.numBPM.Size = new System.Drawing.Size(46, 20);
+            this.numBPM.TabIndex = 7;
+            this.numBPM.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numBPM.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // btnPlay
+            // lblTact
             // 
-            this.btnPlay.Location = new System.Drawing.Point(516, 9);
-            this.btnPlay.Name = "btnPlay";
-            this.btnPlay.Size = new System.Drawing.Size(46, 31);
-            this.btnPlay.TabIndex = 2;
-            this.btnPlay.Text = "Play";
-            this.btnPlay.UseVisualStyleBackColor = true;
+            this.lblTact.AutoSize = true;
+            this.lblTact.Location = new System.Drawing.Point(664, 27);
+            this.lblTact.Name = "lblTact";
+            this.lblTact.Size = new System.Drawing.Size(32, 13);
+            this.lblTact.TabIndex = 6;
+            this.lblTact.Text = "Takt:";
+            // 
+            // lblBPM
+            // 
+            this.lblBPM.AutoSize = true;
+            this.lblBPM.Location = new System.Drawing.Point(664, 9);
+            this.lblBPM.Name = "lblBPM";
+            this.lblBPM.Size = new System.Drawing.Size(33, 13);
+            this.lblBPM.TabIndex = 5;
+            this.lblBPM.Text = "BPM:";
+            // 
+            // tbVolume
+            // 
+            this.tbVolume.Location = new System.Drawing.Point(226, 3);
+            this.tbVolume.Name = "tbVolume";
+            this.tbVolume.Size = new System.Drawing.Size(104, 45);
+            this.tbVolume.TabIndex = 4;
+            this.tbVolume.Scroll += new System.EventHandler(this.tbVolume_Scroll);
             // 
             // btnRecord
             // 
@@ -106,13 +143,32 @@
             this.btnRecord.Text = "Aufnahme";
             this.btnRecord.UseVisualStyleBackColor = true;
             // 
-            // tbVolume
+            // btnPlay
             // 
-            this.tbVolume.Location = new System.Drawing.Point(226, 3);
-            this.tbVolume.Name = "tbVolume";
-            this.tbVolume.Size = new System.Drawing.Size(104, 45);
-            this.tbVolume.TabIndex = 4;
-            this.tbVolume.Scroll += new System.EventHandler(this.tbVolume_Scroll);
+            this.btnPlay.Location = new System.Drawing.Point(516, 9);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(46, 31);
+            this.btnPlay.TabIndex = 2;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            // 
+            // btnPause
+            // 
+            this.btnPause.Location = new System.Drawing.Point(464, 9);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(46, 31);
+            this.btnPause.TabIndex = 1;
+            this.btnPause.Text = "Pause";
+            this.btnPause.UseVisualStyleBackColor = true;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(412, 9);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(46, 31);
+            this.btnStop.TabIndex = 0;
+            this.btnStop.Text = "Stop";
+            this.btnStop.UseVisualStyleBackColor = true;
             // 
             // chkFiltered
             // 
@@ -156,70 +212,72 @@
             // 
             // mnuBarFile
             // 
+            this.mnuBarFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBarFileSave,
+            this.mnuBarFileExport,
+            this.toolStripSeparator1,
+            this.mnuBarFileExit});
             this.mnuBarFile.Name = "mnuBarFile";
             this.mnuBarFile.Size = new System.Drawing.Size(46, 20);
             this.mnuBarFile.Text = "Datei";
             // 
             // mnuBarEdit
             // 
+            this.mnuBarEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBarEditOptions});
             this.mnuBarEdit.Name = "mnuBarEdit";
             this.mnuBarEdit.Size = new System.Drawing.Size(75, 20);
             this.mnuBarEdit.Text = "Bearbeiten";
             // 
             // mnuBarHelp
             // 
+            this.mnuBarHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBarHelpHelp,
+            this.mnuBarHelpAbout});
             this.mnuBarHelp.Name = "mnuBarHelp";
             this.mnuBarHelp.Size = new System.Drawing.Size(44, 20);
             this.mnuBarHelp.Text = "Hilfe";
             // 
-            // lblBPM
+            // mnuBarEditOptions
             // 
-            this.lblBPM.AutoSize = true;
-            this.lblBPM.Location = new System.Drawing.Point(664, 9);
-            this.lblBPM.Name = "lblBPM";
-            this.lblBPM.Size = new System.Drawing.Size(33, 13);
-            this.lblBPM.TabIndex = 5;
-            this.lblBPM.Text = "BPM:";
+            this.mnuBarEditOptions.Name = "mnuBarEditOptions";
+            this.mnuBarEditOptions.Size = new System.Drawing.Size(152, 22);
+            this.mnuBarEditOptions.Text = "Optionen";
             // 
-            // lblTact
+            // mnuBarFileSave
             // 
-            this.lblTact.AutoSize = true;
-            this.lblTact.Location = new System.Drawing.Point(664, 27);
-            this.lblTact.Name = "lblTact";
-            this.lblTact.Size = new System.Drawing.Size(32, 13);
-            this.lblTact.TabIndex = 6;
-            this.lblTact.Text = "Takt:";
+            this.mnuBarFileSave.Name = "mnuBarFileSave";
+            this.mnuBarFileSave.Size = new System.Drawing.Size(157, 22);
+            this.mnuBarFileSave.Text = "Speichern unter";
             // 
-            // numBPM
+            // mnuBarFileExport
             // 
-            this.numBPM.Location = new System.Drawing.Point(703, 3);
-            this.numBPM.Maximum = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.numBPM.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numBPM.Name = "numBPM";
-            this.numBPM.Size = new System.Drawing.Size(46, 20);
-            this.numBPM.TabIndex = 7;
-            this.numBPM.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numBPM.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.mnuBarFileExport.Name = "mnuBarFileExport";
+            this.mnuBarFileExport.Size = new System.Drawing.Size(157, 22);
+            this.mnuBarFileExport.Text = "Export";
             // 
-            // txtTact
+            // toolStripSeparator1
             // 
-            this.txtTact.Location = new System.Drawing.Point(703, 27);
-            this.txtTact.Name = "txtTact";
-            this.txtTact.ReadOnly = true;
-            this.txtTact.Size = new System.Drawing.Size(46, 20);
-            this.txtTact.TabIndex = 8;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(154, 6);
+            // 
+            // mnuBarFileExit
+            // 
+            this.mnuBarFileExit.Name = "mnuBarFileExit";
+            this.mnuBarFileExit.Size = new System.Drawing.Size(157, 22);
+            this.mnuBarFileExit.Text = "Beenden";
+            // 
+            // mnuBarHelpHelp
+            // 
+            this.mnuBarHelpHelp.Name = "mnuBarHelpHelp";
+            this.mnuBarHelpHelp.Size = new System.Drawing.Size(152, 22);
+            this.mnuBarHelpHelp.Text = "Hilfe";
+            // 
+            // mnuBarHelpAbout
+            // 
+            this.mnuBarHelpAbout.Name = "mnuBarHelpAbout";
+            this.mnuBarHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.mnuBarHelpAbout.Text = "Über";
             // 
             // MainControllerGui
             // 
@@ -236,11 +294,11 @@
             this.Text = "Bubblegum-Sequencer";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picSequence)).EndInit();
             this.mnuBar.ResumeLayout(false);
             this.mnuBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,6 +323,13 @@
         private System.Windows.Forms.Label lblTact;
         private System.Windows.Forms.Label lblBPM;
         private System.Windows.Forms.TextBox txtTact;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarFileSave;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarFileExport;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarFileExit;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarEditOptions;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarHelpHelp;
+        private System.Windows.Forms.ToolStripMenuItem mnuBarHelpAbout;
     }
 }
 
