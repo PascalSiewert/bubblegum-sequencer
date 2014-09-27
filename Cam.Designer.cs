@@ -38,13 +38,13 @@
             this.cbxResolution = new System.Windows.Forms.ComboBox();
             this.txtFps = new System.Windows.Forms.TextBox();
             this.gpxJustification = new System.Windows.Forms.GroupBox();
-            this.lblCornerColor = new System.Windows.Forms.Label();
-            this.cbxCornerColor = new System.Windows.Forms.ComboBox();
-            this.lblColumns = new System.Windows.Forms.Label();
-            this.lblRows = new System.Windows.Forms.Label();
-            this.txtColumns = new System.Windows.Forms.TextBox();
-            this.txtRows = new System.Windows.Forms.TextBox();
             this.btnJustification = new System.Windows.Forms.Button();
+            this.txtRows = new System.Windows.Forms.TextBox();
+            this.txtColumns = new System.Windows.Forms.TextBox();
+            this.lblRows = new System.Windows.Forms.Label();
+            this.lblColumns = new System.Windows.Forms.Label();
+            this.cbxCornerColor = new System.Windows.Forms.ComboBox();
+            this.lblCornerColor = new System.Windows.Forms.Label();
             this.btnResume = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
             this.picPicture = new System.Windows.Forms.PictureBox();
@@ -152,32 +152,28 @@
             this.gpxJustification.TabStop = false;
             this.gpxJustification.Text = "Justierung";
             // 
-            // lblCornerColor
+            // btnJustification
             // 
-            this.lblCornerColor.AutoSize = true;
-            this.lblCornerColor.Location = new System.Drawing.Point(7, 20);
-            this.lblCornerColor.Name = "lblCornerColor";
-            this.lblCornerColor.Size = new System.Drawing.Size(80, 13);
-            this.lblCornerColor.TabIndex = 0;
-            this.lblCornerColor.Text = "Eckpunktfarbe:";
+            this.btnJustification.Location = new System.Drawing.Point(6, 72);
+            this.btnJustification.Name = "btnJustification";
+            this.btnJustification.Size = new System.Drawing.Size(244, 31);
+            this.btnJustification.TabIndex = 6;
+            this.btnJustification.Text = "Justieren";
+            this.btnJustification.UseVisualStyleBackColor = true;
             // 
-            // cbxCornerColor
+            // txtRows
             // 
-            this.cbxCornerColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxCornerColor.FormattingEnabled = true;
-            this.cbxCornerColor.Location = new System.Drawing.Point(93, 17);
-            this.cbxCornerColor.Name = "cbxCornerColor";
-            this.cbxCornerColor.Size = new System.Drawing.Size(157, 21);
-            this.cbxCornerColor.TabIndex = 1;
+            this.txtRows.Location = new System.Drawing.Point(190, 46);
+            this.txtRows.Name = "txtRows";
+            this.txtRows.Size = new System.Drawing.Size(60, 20);
+            this.txtRows.TabIndex = 5;
             // 
-            // lblColumns
+            // txtColumns
             // 
-            this.lblColumns.AutoSize = true;
-            this.lblColumns.Location = new System.Drawing.Point(7, 49);
-            this.lblColumns.Name = "lblColumns";
-            this.lblColumns.Size = new System.Drawing.Size(46, 13);
-            this.lblColumns.TabIndex = 2;
-            this.lblColumns.Text = "Spalten:";
+            this.txtColumns.Location = new System.Drawing.Point(59, 46);
+            this.txtColumns.Name = "txtColumns";
+            this.txtColumns.Size = new System.Drawing.Size(60, 20);
+            this.txtColumns.TabIndex = 4;
             // 
             // lblRows
             // 
@@ -188,28 +184,32 @@
             this.lblRows.TabIndex = 3;
             this.lblRows.Text = "Reihen:";
             // 
-            // txtColumns
+            // lblColumns
             // 
-            this.txtColumns.Location = new System.Drawing.Point(59, 46);
-            this.txtColumns.Name = "txtColumns";
-            this.txtColumns.Size = new System.Drawing.Size(60, 20);
-            this.txtColumns.TabIndex = 4;
+            this.lblColumns.AutoSize = true;
+            this.lblColumns.Location = new System.Drawing.Point(7, 49);
+            this.lblColumns.Name = "lblColumns";
+            this.lblColumns.Size = new System.Drawing.Size(46, 13);
+            this.lblColumns.TabIndex = 2;
+            this.lblColumns.Text = "Spalten:";
             // 
-            // txtRows
+            // cbxCornerColor
             // 
-            this.txtRows.Location = new System.Drawing.Point(190, 46);
-            this.txtRows.Name = "txtRows";
-            this.txtRows.Size = new System.Drawing.Size(60, 20);
-            this.txtRows.TabIndex = 5;
+            this.cbxCornerColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCornerColor.FormattingEnabled = true;
+            this.cbxCornerColor.Location = new System.Drawing.Point(93, 17);
+            this.cbxCornerColor.Name = "cbxCornerColor";
+            this.cbxCornerColor.Size = new System.Drawing.Size(157, 21);
+            this.cbxCornerColor.TabIndex = 1;
             // 
-            // btnJustification
+            // lblCornerColor
             // 
-            this.btnJustification.Location = new System.Drawing.Point(6, 72);
-            this.btnJustification.Name = "btnJustification";
-            this.btnJustification.Size = new System.Drawing.Size(244, 31);
-            this.btnJustification.TabIndex = 6;
-            this.btnJustification.Text = "Justieren";
-            this.btnJustification.UseVisualStyleBackColor = true;
+            this.lblCornerColor.AutoSize = true;
+            this.lblCornerColor.Location = new System.Drawing.Point(7, 20);
+            this.lblCornerColor.Name = "lblCornerColor";
+            this.lblCornerColor.Size = new System.Drawing.Size(80, 13);
+            this.lblCornerColor.TabIndex = 0;
+            this.lblCornerColor.Text = "Eckpunktfarbe:";
             // 
             // btnResume
             // 
@@ -232,7 +232,9 @@
             // 
             // picPicture
             // 
+            this.picPicture.BackColor = System.Drawing.Color.DarkGray;
             this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picPicture.Location = new System.Drawing.Point(278, 54);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(410, 230);

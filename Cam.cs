@@ -89,17 +89,21 @@ namespace bubblegum_sequencer
         private void cbxResolution_SelectedIndexChanged(object sender, EventArgs e)//Auflösung festlegen und Video starten
         {
             string selectedItem = cbxResolution.SelectedItem.ToString();
+            double aspectRatio;
+
             if (selectedItem != "keine Auflösungen verfügbar!")//Auflösung festlegen
             {
                 videoSource.VideoResolution = videoSource.VideoCapabilities[cbxResolution.SelectedIndex];//Ausgewählte Auflösung übernehmen
 
-                if (((videoSource.VideoResolution.FrameSize.Width / videoSource.VideoResolution.FrameSize.Height) * 230) < 410)
+                if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 230) < 410)
                 {
-                    picPicture.Width = (videoSource.VideoResolution.FrameSize.Width / videoSource.VideoResolution.FrameSize.Height) * 230;
+                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
+                    picPicture.Width = Convert.ToInt32(aspectRatio * 230);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                 }
                 else
                 {
-                    picPicture.Height = (videoSource.VideoResolution.FrameSize.Height / videoSource.VideoResolution.FrameSize.Width) * 410;
+                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
+                    picPicture.Height = Convert.ToInt32(aspectRatio * 410);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                 }
             }
 
