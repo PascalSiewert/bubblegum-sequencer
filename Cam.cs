@@ -13,16 +13,23 @@ namespace bubblegum_sequencer
 {
     public partial class Cam : Form
     {
-        public Cam()
+        private MainControllerGui mainController;
+        VideoCaptureDevice videoSource;//Videoquelle/Kamera
+
+        public Cam(MainControllerGui form, VideoCaptureDevice aVideoSource)
         {
             InitializeComponent();
+
+            mainController = form;
+
+            videoSource = aVideoSource;
         }
 
-        VideoCaptureDevice videoSource;//Videoquelle/Kamera
         FilterInfoCollection videosources;//Kameraliste
         Bitmap picture;//Aktuelles Bild/aktueller Frame
         bool connection = false;//Gibt an, ob bereits eine Verbindung gestartet wurde
 
+        //EVENTS
         private void Cam_Load(object sender, EventArgs e)
         {
             videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -30,6 +37,21 @@ namespace bubblegum_sequencer
             foreach (FilterInfo source in videosources)//Lädt alle verügbaren Kameras in cbxCam
             {
                 cbxCam.Items.Add(source.Name);
+            }
+
+            if (videoSource.Source != null)//Falls bereits eine Kamera ausgewählt wurde, wird diese hier geladen
+            {
+                connection = true;
+                for (int i = 0; i < videosources.Count; i++)//Sucht die bereits gewählte Kamera in den Sources und wählt diese in cbxCam aus
+                {
+                    VideoCaptureDevice tempVideoSource = new VideoCaptureDevice(videosources[i].MonikerString);//Zapft Videoquelle kurz an
+                    if (videoSource.Source == tempVideoSource.Source)
+                    {
+                        cbxCam.SelectedIndex = i;
+                    }
+                    tempVideoSource.SignalToStop();
+                    tempVideoSource = null;
+                }
             }
         }
 
@@ -117,13 +139,28 @@ namespace bubblegum_sequencer
 
         private void Cam_FormClosed(object sender, FormClosedEventArgs e)
         {
+            /* WIRD NUR NOCH BEI KOMPLETTER PROGRAMM BEENDUNG GESCHLOSSEN
             if (videoSource != null && videoSource.IsRunning)//Webcam als Source wieder ausbinden
             {
                 videoSource.SignalToStop();
                 videoSource = null;
             }
+             * */
         }
 
-        
+        private void btnResume_Click(object sender, EventArgs e)
+        {
+            if (cbxCam.SelectedItem.ToString() != "")//Nur wenn eine Kamera ausgewählt wurde
+            {
+                mainController.stream_start(videoSource);
+
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Bitte wählen Sie erst eine Kamera aus!", "keine Kamera ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+        }       
     }
 }

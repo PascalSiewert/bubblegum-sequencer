@@ -219,6 +219,7 @@
             this.btnResume.TabIndex = 9;
             this.btnResume.Text = "Übernehmen";
             this.btnResume.UseVisualStyleBackColor = true;
+            this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
             // 
             // btnAbort
             // 

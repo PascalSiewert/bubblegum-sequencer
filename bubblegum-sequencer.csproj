@@ -63,6 +63,13 @@
     <Compile Include="Cam.Designer.cs">
       <DependentUpon>Cam.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorList.cs" />
+    <Compile Include="ColorManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorManager.Designer.cs">
+      <DependentUpon>ColorManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorToneMap.cs" />
     <Compile Include="MainControllerGui.cs">
       <SubType>Form</SubType>
@@ -75,6 +82,9 @@
     <Compile Include="Tone.cs" />
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorManager.resx">
+      <DependentUpon>ColorManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainControllerGui.resx">
       <DependentUpon>MainControllerGui.cs</DependentUpon>
