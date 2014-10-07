@@ -11,11 +11,15 @@ using AForge.Video.DirectShow;
 
 namespace bubblegum_sequencer
 {
-    public partial class MainControllerGui : Form
+    public partial class MainControllerGui : Form, IObserver
     {
+        public VideoSource source;
+
         public MainControllerGui()
         {
             InitializeComponent();
+            source = new VideoSource();
+            source.add(this);
         }
 
         private VideoCaptureDevice videoSource;//Videoquelle/Kamera
@@ -24,46 +28,45 @@ namespace bubblegum_sequencer
         public void stream_start(VideoCaptureDevice aVideoSource)
         {
             videoSource = aVideoSource;//Übernimmt neue Videoquelle
-            //this.Close();//TEST
 
             //Anpassung der picPicture an die Seitenverhältnisse der Auflösung
-            double aspectRatio;
-            if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
+            if (videoSource != null)
             {
-                aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
-                picPicture.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-            }
-            else
-            {
-                aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
-                picPicture.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-            }
+                double aspectRatio;
+                if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
+                {
+                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
+                    picPicture.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                }
+                else
+                {
+                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
+                    picPicture.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                }
 
-            if (!connection)
-            {
-                videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);//Verknüpft Videoquelle mit Event
-                videoSource.Start();//Startet Videoquelle
-                connection = true;
-            }           
+                if (!connection)
+                {
+                    videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);//Verknüpft Videoquelle mit Event
+                    videoSource.Start();//Startet Videoquelle
+                    connection = true;
+                }
+            }
         }//startet Stream
 
         //EVENTS
         void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
-            Bitmap picture;
+            source.Picture = (Bitmap)eventArgs.Frame.Clone();
 
-            picture = (Bitmap)eventArgs.Frame.Clone();
-
-            //HIER: Bildanalyse
-
-            picPicture.BackgroundImage = picture;
+            //HIER: Bildanalyse            
         }
 
 
         //GUI
         private void kameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Cam Camoptions = new Cam(this, videoSource);
+            Cam Camoptions = new Cam(this, videoSource, source);
+            source.add(Camoptions);
 
             Camoptions.Show();
         }
@@ -83,6 +86,13 @@ namespace bubblegum_sequencer
                 this.videoSource = null;
             }
             Environment.Exit(0);//Alle Threads beenden
+        }
+
+        public void update(IObserverable subject)
+        {
+            //HIER: Bildanalyse   
+
+            picPicture.BackgroundImage = ((VideoSource)subject).Picture;
         }
     }
 }

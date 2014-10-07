@@ -71,6 +71,8 @@
       <DependentUpon>ColorManager.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorToneMap.cs" />
+    <Compile Include="IObserver.cs" />
+    <Compile Include="IObserverable.cs" />
     <Compile Include="MainControllerGui.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +82,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tone.cs" />
+    <Compile Include="VideoSource.cs" />
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
     </EmbeddedResource>

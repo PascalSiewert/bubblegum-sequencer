@@ -11,23 +11,35 @@ using AForge.Video.DirectShow;
 
 namespace bubblegum_sequencer
 {
-    public partial class Cam : Form
+    public partial class Cam : Form, IObserver
     {
         private MainControllerGui mainController;
         VideoCaptureDevice videoSource;//Videoquelle/Kamera
+        VideoCapabilities oldResolution;
+        string oldMonkierString;
+        VideoSource source;
 
-        public Cam(MainControllerGui form, VideoCaptureDevice aVideoSource)
+        public Cam(MainControllerGui form,  VideoCaptureDevice aVideoSource, VideoSource aSource)
         {
             InitializeComponent();
 
             mainController = form;
 
+            /*
+            if (aVideoSource != null)//Wenn es bereits eine Videosource gibt, synchronisieren
+            {
+                videoSource.Source = aVideoSource.Source;
+                videoSource.VideoResolution = aVideoSource.VideoResolution;
+            }
+             */
             videoSource = aVideoSource;
+
+            source = aSource;//Übergabe des Obeserverable, um von Cam aus Bilder zu verteilen
         }
 
         FilterInfoCollection videosources;//Kameraliste
         Bitmap picture;//Aktuelles Bild/aktueller Frame
-        bool connection = false;//Gibt an, ob bereits eine Verbindung gestartet wurde
+        bool firstConnection = true;//Gibt an, ob es sich um die erste Verbindung mit einer Kamera handelt(Cam_Load)
 
         //EVENTS
         private void Cam_Load(object sender, EventArgs e)
@@ -41,13 +53,15 @@ namespace bubblegum_sequencer
 
             if (videoSource.Source != null)//Falls bereits eine Kamera ausgewählt wurde, wird diese hier geladen
             {
-                connection = true;
+                firstConnection = false;
                 for (int i = 0; i < videosources.Count; i++)//Sucht die bereits gewählte Kamera in den Sources und wählt diese in cbxCam aus
                 {
                     VideoCaptureDevice tempVideoSource = new VideoCaptureDevice(videosources[i].MonikerString);//Zapft Videoquelle kurz an
                     if (videoSource.Source == tempVideoSource.Source)
                     {
                         cbxCam.SelectedIndex = i;
+                        oldMonkierString = videosources[i].MonikerString;//Speichert Monkierstring von übergebener Source
+                        oldResolution = videoSource.VideoResolution;//Speichert Resolution von übergebener Source
                     }
                     tempVideoSource.SignalToStop();
                     tempVideoSource = null;
@@ -60,14 +74,24 @@ namespace bubblegum_sequencer
         {
             picture = (Bitmap)eventArgs.Frame.Clone();
 
-            //HIER: Bildanalyse
-
-            picPicture.BackgroundImage = picture;
+            source.Picture = picture;            
         }
 
         //GUI
         private void btnAbort_Click(object sender, EventArgs e)
         {
+            //Änderungen wieder zurück setzen 
+            if (firstConnection)//Wenn es die erste Verbindung mit einer Kamera ist, dann wird bei Abbruch videoSource gelöscht
+            {
+                videoSource.SignalToStop();
+                videoSource = null;
+            }
+            else
+            {
+                videoSource = new VideoCaptureDevice(oldMonkierString);
+                videoSource.VideoResolution = oldResolution;
+            }
+
             this.Close();
         }
 
@@ -130,7 +154,7 @@ namespace bubblegum_sequencer
             }
 
             //Video starten
-            if (!connection)
+            //if (!connection)
             {
                 videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);
                 videoSource.Start();
@@ -161,6 +185,16 @@ namespace bubblegum_sequencer
                 MessageBox.Show("Bitte wählen Sie erst eine Kamera aus!", "keine Kamera ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             
-        }       
+        }
+
+        public void update(IObserverable subject)
+        {
+            picPicture.BackgroundImage = ((VideoSource)subject).Picture;
+
+            //HIER: Bildanalyse
+        }
     }
 }
+/*
+Führt void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs) immer da aus, wo es zuletzt hinzugefügt wurde
+*/
