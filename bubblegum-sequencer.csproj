@@ -64,13 +64,19 @@
       <DependentUpon>Cam.cs</DependentUpon>
     </Compile>
     <Compile Include="ColorList.cs" />
-    <Compile Include="ColorManager.cs">
+    <Compile Include="ColorToneMap.cs" />
+    <Compile Include="ColorInsert.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorManager.Designer.cs">
-      <DependentUpon>ColorManager.cs</DependentUpon>
+    <Compile Include="ColorInsert.Designer.cs">
+      <DependentUpon>ColorInsert.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorToneMap.cs" />
+    <Compile Include="ColorManagerV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorManagerV2.Designer.cs">
+      <DependentUpon>ColorManagerV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="IObserver.cs" />
     <Compile Include="IObserverable.cs" />
     <Compile Include="MainControllerGui.cs">
@@ -86,8 +92,11 @@
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorManager.resx">
-      <DependentUpon>ColorManager.cs</DependentUpon>
+    <EmbeddedResource Include="ColorInsert.resx">
+      <DependentUpon>ColorInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorManagerV2.resx">
+      <DependentUpon>ColorManagerV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainControllerGui.resx">
       <DependentUpon>MainControllerGui.cs</DependentUpon>

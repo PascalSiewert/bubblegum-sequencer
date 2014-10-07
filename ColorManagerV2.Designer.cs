@@ -1,6 +1,6 @@
-﻿namespace bubblegum
+﻿namespace bubblegum_sequencer
 {
-    partial class Farbverwaltung
+    partial class ColorManagerV2
     {
         /// <summary>
         /// Required designer variable.
@@ -28,92 +28,94 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lstBox = new System.Windows.Forms.ListBox();
+            this.lstColors = new System.Windows.Forms.ListBox();
             this.lblColourName = new System.Windows.Forms.Label();
-            this.txtBoxClrName = new System.Windows.Forms.TextBox();
-            this.lblColour = new System.Windows.Forms.Label();
-            this.txtBoxClr = new System.Windows.Forms.TextBox();
+            this.txtColorName = new System.Windows.Forms.TextBox();
+            this.lblColor = new System.Windows.Forms.Label();
+            this.txtColor = new System.Windows.Forms.TextBox();
             this.pnlColour = new System.Windows.Forms.Panel();
-            this.lblAccuracy = new System.Windows.Forms.Label();
-            this.txtBoxAccu = new System.Windows.Forms.TextBox();
-            this.btnAddClr = new System.Windows.Forms.Button();
+            this.lblReadingcount = new System.Windows.Forms.Label();
+            this.txtReadingcount = new System.Windows.Forms.TextBox();
+            this.btnAddColor = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // lstBox
+            // lstColors
             // 
-            this.lstBox.FormattingEnabled = true;
-            this.lstBox.Location = new System.Drawing.Point(13, 13);
-            this.lstBox.Name = "lstBox";
-            this.lstBox.Size = new System.Drawing.Size(224, 212);
-            this.lstBox.TabIndex = 0;
+            this.lstColors.FormattingEnabled = true;
+            this.lstColors.Location = new System.Drawing.Point(13, 13);
+            this.lstColors.Name = "lstColors";
+            this.lstColors.Size = new System.Drawing.Size(224, 212);
+            this.lstColors.TabIndex = 0;
+            this.lstColors.SelectedIndexChanged += new System.EventHandler(this.lstColors_SelectedIndexChanged);
             // 
             // lblColourName
             // 
             this.lblColourName.AutoSize = true;
-            this.lblColourName.Location = new System.Drawing.Point(244, 13);
+            this.lblColourName.Location = new System.Drawing.Point(247, 16);
             this.lblColourName.Name = "lblColourName";
             this.lblColourName.Size = new System.Drawing.Size(57, 13);
             this.lblColourName.TabIndex = 1;
             this.lblColourName.Text = "Farbname:";
             // 
-            // txtBoxClrName
+            // txtColorName
             // 
-            this.txtBoxClrName.Location = new System.Drawing.Point(319, 13);
-            this.txtBoxClrName.Name = "txtBoxClrName";
-            this.txtBoxClrName.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxClrName.TabIndex = 2;
+            this.txtColorName.Location = new System.Drawing.Point(319, 13);
+            this.txtColorName.Name = "txtColorName";
+            this.txtColorName.Size = new System.Drawing.Size(220, 20);
+            this.txtColorName.TabIndex = 2;
             // 
-            // lblColour
+            // lblColor
             // 
-            this.lblColour.AutoSize = true;
-            this.lblColour.Location = new System.Drawing.Point(247, 59);
-            this.lblColour.Name = "lblColour";
-            this.lblColour.Size = new System.Drawing.Size(37, 13);
-            this.lblColour.TabIndex = 3;
-            this.lblColour.Text = "Farbe:";
+            this.lblColor.AutoSize = true;
+            this.lblColor.Location = new System.Drawing.Point(247, 59);
+            this.lblColor.Name = "lblColor";
+            this.lblColor.Size = new System.Drawing.Size(37, 13);
+            this.lblColor.TabIndex = 3;
+            this.lblColor.Text = "Farbe:";
             // 
-            // txtBoxClr
+            // txtColor
             // 
-            this.txtBoxClr.Location = new System.Drawing.Point(319, 59);
-            this.txtBoxClr.Name = "txtBoxClr";
-            this.txtBoxClr.ReadOnly = true;
-            this.txtBoxClr.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxClr.TabIndex = 4;
+            this.txtColor.Location = new System.Drawing.Point(319, 56);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.ReadOnly = true;
+            this.txtColor.Size = new System.Drawing.Size(100, 20);
+            this.txtColor.TabIndex = 4;
             // 
             // pnlColour
             // 
-            this.pnlColour.Location = new System.Drawing.Point(440, 59);
+            this.pnlColour.Location = new System.Drawing.Point(439, 56);
             this.pnlColour.Name = "pnlColour";
             this.pnlColour.Size = new System.Drawing.Size(100, 20);
             this.pnlColour.TabIndex = 5;
             // 
-            // lblAccuracy
+            // lblReadingcount
             // 
-            this.lblAccuracy.AutoSize = true;
-            this.lblAccuracy.Location = new System.Drawing.Point(247, 102);
-            this.lblAccuracy.Name = "lblAccuracy";
-            this.lblAccuracy.Size = new System.Drawing.Size(67, 13);
-            this.lblAccuracy.TabIndex = 6;
-            this.lblAccuracy.Text = "Genauigkeit:";
+            this.lblReadingcount.AutoSize = true;
+            this.lblReadingcount.Location = new System.Drawing.Point(247, 102);
+            this.lblReadingcount.Name = "lblReadingcount";
+            this.lblReadingcount.Size = new System.Drawing.Size(89, 13);
+            this.lblReadingcount.TabIndex = 6;
+            this.lblReadingcount.Text = "Messungsanzahl:";
             // 
-            // txtBoxAccu
+            // txtReadingcount
             // 
-            this.txtBoxAccu.Location = new System.Drawing.Point(319, 102);
-            this.txtBoxAccu.Name = "txtBoxAccu";
-            this.txtBoxAccu.ReadOnly = true;
-            this.txtBoxAccu.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxAccu.TabIndex = 7;
+            this.txtReadingcount.Location = new System.Drawing.Point(342, 99);
+            this.txtReadingcount.Name = "txtReadingcount";
+            this.txtReadingcount.ReadOnly = true;
+            this.txtReadingcount.Size = new System.Drawing.Size(30, 20);
+            this.txtReadingcount.TabIndex = 7;
             // 
-            // btnAddClr
+            // btnAddColor
             // 
-            this.btnAddClr.Location = new System.Drawing.Point(250, 163);
-            this.btnAddClr.Name = "btnAddClr";
-            this.btnAddClr.Size = new System.Drawing.Size(130, 23);
-            this.btnAddClr.TabIndex = 8;
-            this.btnAddClr.Text = "Farbe hinzufügen";
-            this.btnAddClr.UseVisualStyleBackColor = true;
+            this.btnAddColor.Location = new System.Drawing.Point(250, 163);
+            this.btnAddColor.Name = "btnAddColor";
+            this.btnAddColor.Size = new System.Drawing.Size(130, 23);
+            this.btnAddColor.TabIndex = 8;
+            this.btnAddColor.Text = "Farbe hinzufügen";
+            this.btnAddColor.UseVisualStyleBackColor = true;
+            this.btnAddColor.Click += new System.EventHandler(this.btnAddColor_Click);
             // 
             // btnDelete
             // 
@@ -133,25 +135,25 @@
             this.btnClose.Text = "Schließen";
             this.btnClose.UseVisualStyleBackColor = true;
             // 
-            // Farbverwaltung
+            // ColorManagerV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(572, 246);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnAddClr);
-            this.Controls.Add(this.txtBoxAccu);
-            this.Controls.Add(this.lblAccuracy);
+            this.Controls.Add(this.btnAddColor);
+            this.Controls.Add(this.txtReadingcount);
+            this.Controls.Add(this.lblReadingcount);
             this.Controls.Add(this.pnlColour);
-            this.Controls.Add(this.txtBoxClr);
-            this.Controls.Add(this.lblColour);
-            this.Controls.Add(this.txtBoxClrName);
+            this.Controls.Add(this.txtColor);
+            this.Controls.Add(this.lblColor);
+            this.Controls.Add(this.txtColorName);
             this.Controls.Add(this.lblColourName);
-            this.Controls.Add(this.lstBox);
-            this.Name = "Farbverwaltung";
+            this.Controls.Add(this.lstColors);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Name = "ColorManagerV2";
             this.Text = "Farbverwaltung";
-            this.Load += new System.EventHandler(this.Farbverwaltung_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,15 +161,15 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox lstBox;
+        private System.Windows.Forms.ListBox lstColors;
         private System.Windows.Forms.Label lblColourName;
-        private System.Windows.Forms.TextBox txtBoxClrName;
-        private System.Windows.Forms.Label lblColour;
-        private System.Windows.Forms.TextBox txtBoxClr;
+        private System.Windows.Forms.TextBox txtColorName;
+        private System.Windows.Forms.Label lblColor;
+        private System.Windows.Forms.TextBox txtColor;
         private System.Windows.Forms.Panel pnlColour;
-        private System.Windows.Forms.Label lblAccuracy;
-        private System.Windows.Forms.TextBox txtBoxAccu;
-        private System.Windows.Forms.Button btnAddClr;
+        private System.Windows.Forms.Label lblReadingcount;
+        private System.Windows.Forms.TextBox txtReadingcount;
+        private System.Windows.Forms.Button btnAddColor;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnClose;
     }

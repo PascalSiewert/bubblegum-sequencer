@@ -14,11 +14,13 @@ namespace bubblegum_sequencer
     public partial class MainControllerGui : Form, IObserver
     {
         public VideoSource source;
+        private ColorList colorList;
 
         public MainControllerGui()
         {
             InitializeComponent();
             source = new VideoSource();
+            colorList = new ColorList();
             source.add(this);
         }
 
@@ -73,7 +75,8 @@ namespace bubblegum_sequencer
 
         private void farbverwaltungToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorManager colorManager = new ColorManager();
+            ColorManagerV2 colorManager = new ColorManagerV2();
+            colorList.add(colorManager);
 
             colorManager.Show();
         }
@@ -91,8 +94,11 @@ namespace bubblegum_sequencer
         public void update(IObserverable subject)
         {
             //HIER: Bildanalyse   
-
-            picPicture.BackgroundImage = ((VideoSource)subject).Picture;
+            try
+            {
+                picPicture.BackgroundImage = ((VideoSource)subject).Picture;
+            }
+            catch { }
         }
     }
 }

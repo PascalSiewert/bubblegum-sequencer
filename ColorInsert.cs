@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace bubblegum
+namespace bubblegum_sequencer
 {
-    public partial class Form1 : Form
+    public partial class ColorInsert : Form, IObserver
     {
-        public Form1()
+        ColorList colorlist;
+
+        public ColorInsert()
         {
             InitializeComponent();
+        }
+
+        public void update(IObserverable subject)
+        {
+            colorlist = (ColorList)subject;
         }
     }
 }

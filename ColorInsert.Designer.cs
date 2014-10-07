@@ -1,6 +1,6 @@
-﻿namespace bubblegum
+﻿namespace bubblegum_sequencer
 {
-    partial class Form1
+    partial class ColorInsert
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.picBox = new System.Windows.Forms.PictureBox();
-            this.lblAccuracy = new System.Windows.Forms.Label();
-            this.txtBoxAccuracy = new System.Windows.Forms.TextBox();
+            this.lblReadingcount = new System.Windows.Forms.Label();
+            this.txtReadingcount = new System.Windows.Forms.TextBox();
             this.lblAccu = new System.Windows.Forms.Label();
-            this.lblColour = new System.Windows.Forms.Label();
-            this.txtBoxColour = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblColourName = new System.Windows.Forms.Label();
-            this.txtBoxClrName = new System.Windows.Forms.TextBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblColor = new System.Windows.Forms.Label();
+            this.txtColor = new System.Windows.Forms.TextBox();
+            this.pnlColor = new System.Windows.Forms.Panel();
+            this.lblColorName = new System.Windows.Forms.Label();
+            this.txtColorName = new System.Windows.Forms.TextBox();
+            this.prbWork = new System.Windows.Forms.ProgressBar();
             this.btnCommit = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAbort = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,21 +51,21 @@
             this.picBox.TabIndex = 0;
             this.picBox.TabStop = false;
             // 
-            // lblAccuracy
+            // lblReadingcount
             // 
-            this.lblAccuracy.AutoSize = true;
-            this.lblAccuracy.Location = new System.Drawing.Point(535, 13);
-            this.lblAccuracy.Name = "lblAccuracy";
-            this.lblAccuracy.Size = new System.Drawing.Size(67, 13);
-            this.lblAccuracy.TabIndex = 1;
-            this.lblAccuracy.Text = "Genauigkeit:";
+            this.lblReadingcount.AutoSize = true;
+            this.lblReadingcount.Location = new System.Drawing.Point(535, 13);
+            this.lblReadingcount.Name = "lblReadingcount";
+            this.lblReadingcount.Size = new System.Drawing.Size(89, 13);
+            this.lblReadingcount.TabIndex = 1;
+            this.lblReadingcount.Text = "Messungsanzahl:";
             // 
-            // txtBoxAccuracy
+            // txtReadingcount
             // 
-            this.txtBoxAccuracy.Location = new System.Drawing.Point(618, 13);
-            this.txtBoxAccuracy.Name = "txtBoxAccuracy";
-            this.txtBoxAccuracy.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxAccuracy.TabIndex = 2;
+            this.txtReadingcount.Location = new System.Drawing.Point(688, 10);
+            this.txtReadingcount.Name = "txtReadingcount";
+            this.txtReadingcount.Size = new System.Drawing.Size(30, 20);
+            this.txtReadingcount.TabIndex = 2;
             // 
             // lblAccu
             // 
@@ -75,52 +75,52 @@
             this.lblAccu.Size = new System.Drawing.Size(0, 13);
             this.lblAccu.TabIndex = 3;
             // 
-            // lblColour
+            // lblColor
             // 
-            this.lblColour.AutoSize = true;
-            this.lblColour.Location = new System.Drawing.Point(535, 39);
-            this.lblColour.Name = "lblColour";
-            this.lblColour.Size = new System.Drawing.Size(37, 13);
-            this.lblColour.TabIndex = 4;
-            this.lblColour.Text = "Farbe:";
+            this.lblColor.AutoSize = true;
+            this.lblColor.Location = new System.Drawing.Point(535, 39);
+            this.lblColor.Name = "lblColor";
+            this.lblColor.Size = new System.Drawing.Size(37, 13);
+            this.lblColor.TabIndex = 4;
+            this.lblColor.Text = "Farbe:";
             // 
-            // txtBoxColour
+            // txtColor
             // 
-            this.txtBoxColour.Location = new System.Drawing.Point(618, 39);
-            this.txtBoxColour.Name = "txtBoxColour";
-            this.txtBoxColour.ReadOnly = true;
-            this.txtBoxColour.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxColour.TabIndex = 5;
+            this.txtColor.Location = new System.Drawing.Point(618, 39);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.ReadOnly = true;
+            this.txtColor.Size = new System.Drawing.Size(100, 20);
+            this.txtColor.TabIndex = 5;
             // 
-            // panel1
+            // pnlColor
             // 
-            this.panel1.Location = new System.Drawing.Point(734, 39);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(56, 20);
-            this.panel1.TabIndex = 6;
+            this.pnlColor.Location = new System.Drawing.Point(734, 39);
+            this.pnlColor.Name = "pnlColor";
+            this.pnlColor.Size = new System.Drawing.Size(56, 20);
+            this.pnlColor.TabIndex = 6;
             // 
-            // lblColourName
+            // lblColorName
             // 
-            this.lblColourName.AutoSize = true;
-            this.lblColourName.Location = new System.Drawing.Point(535, 65);
-            this.lblColourName.Name = "lblColourName";
-            this.lblColourName.Size = new System.Drawing.Size(57, 13);
-            this.lblColourName.TabIndex = 8;
-            this.lblColourName.Text = "Farbname:";
+            this.lblColorName.AutoSize = true;
+            this.lblColorName.Location = new System.Drawing.Point(535, 65);
+            this.lblColorName.Name = "lblColorName";
+            this.lblColorName.Size = new System.Drawing.Size(57, 13);
+            this.lblColorName.TabIndex = 8;
+            this.lblColorName.Text = "Farbname:";
             // 
-            // txtBoxClrName
+            // txtColorName
             // 
-            this.txtBoxClrName.Location = new System.Drawing.Point(618, 65);
-            this.txtBoxClrName.Name = "txtBoxClrName";
-            this.txtBoxClrName.Size = new System.Drawing.Size(100, 20);
-            this.txtBoxClrName.TabIndex = 9;
+            this.txtColorName.Location = new System.Drawing.Point(618, 65);
+            this.txtColorName.Name = "txtColorName";
+            this.txtColorName.Size = new System.Drawing.Size(100, 20);
+            this.txtColorName.TabIndex = 9;
             // 
-            // progressBar1
+            // prbWork
             // 
-            this.progressBar1.Location = new System.Drawing.Point(13, 332);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(777, 23);
-            this.progressBar1.TabIndex = 10;
+            this.prbWork.Location = new System.Drawing.Point(13, 332);
+            this.prbWork.Name = "prbWork";
+            this.prbWork.Size = new System.Drawing.Size(777, 23);
+            this.prbWork.TabIndex = 10;
             // 
             // btnCommit
             // 
@@ -131,33 +131,34 @@
             this.btnCommit.Text = "Übernehmen";
             this.btnCommit.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnAbort
             // 
-            this.button1.Location = new System.Drawing.Point(688, 280);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Abbrechen";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAbort.Location = new System.Drawing.Point(688, 280);
+            this.btnAbort.Name = "btnAbort";
+            this.btnAbort.Size = new System.Drawing.Size(102, 23);
+            this.btnAbort.TabIndex = 12;
+            this.btnAbort.Text = "Abbrechen";
+            this.btnAbort.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // ColorInsert
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(802, 375);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAbort);
             this.Controls.Add(this.btnCommit);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.txtBoxClrName);
-            this.Controls.Add(this.lblColourName);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.txtBoxColour);
-            this.Controls.Add(this.lblColour);
+            this.Controls.Add(this.prbWork);
+            this.Controls.Add(this.txtColorName);
+            this.Controls.Add(this.lblColorName);
+            this.Controls.Add(this.pnlColor);
+            this.Controls.Add(this.txtColor);
+            this.Controls.Add(this.lblColor);
             this.Controls.Add(this.lblAccu);
-            this.Controls.Add(this.txtBoxAccuracy);
-            this.Controls.Add(this.lblAccuracy);
+            this.Controls.Add(this.txtReadingcount);
+            this.Controls.Add(this.lblReadingcount);
             this.Controls.Add(this.picBox);
-            this.Name = "Form1";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Name = "ColorInsert";
             this.Text = "Farbe hinzufügen";
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.ResumeLayout(false);
@@ -168,17 +169,17 @@
         #endregion
 
         private System.Windows.Forms.PictureBox picBox;
-        private System.Windows.Forms.Label lblAccuracy;
-        private System.Windows.Forms.TextBox txtBoxAccuracy;
+        private System.Windows.Forms.Label lblReadingcount;
+        private System.Windows.Forms.TextBox txtReadingcount;
         private System.Windows.Forms.Label lblAccu;
-        private System.Windows.Forms.Label lblColour;
-        private System.Windows.Forms.TextBox txtBoxColour;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblColourName;
-        private System.Windows.Forms.TextBox txtBoxClrName;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label lblColor;
+        private System.Windows.Forms.TextBox txtColor;
+        private System.Windows.Forms.Panel pnlColor;
+        private System.Windows.Forms.Label lblColorName;
+        private System.Windows.Forms.TextBox txtColorName;
+        private System.Windows.Forms.ProgressBar prbWork;
         private System.Windows.Forms.Button btnCommit;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAbort;
     }
 }
 

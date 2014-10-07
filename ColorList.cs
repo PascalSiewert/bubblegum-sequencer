@@ -6,16 +6,20 @@ using System.Drawing;
 
 namespace bubblegum_sequencer
 {
-    class ColorList
+    class ColorList : IObserverable//Verwaltet alle gespeicherten Farben
     {
+        private List<String> colorNames;
         private List<Color> colors;
+        private List<int> readingcounts;//Anzahl der Messungen
 
         public ColorList()
         {
+            colorNames = new List<string>();
             colors = new List<Color>();
+            readingcounts = new List<int>();
         }
 
-        public bool addColor(Color color)
+        public bool addColor(string colorName, Color color, int readingcount)
         {
             bool colorInList = false;//Gibt an ob Farbe bereits in der Liste vorhanden ist
             bool success = false;
@@ -36,16 +40,28 @@ namespace bubblegum_sequencer
 
             if (!colorInList)
             {
+                colorNames.Add(colorName);
                 colors.Add(color);
+                readingcounts.Add(readingcount);
                 success = true;
             }
+
+            notify();
 
             return success;
         }
 
+        public string getColorName(int id)
+        {
+            return colorNames[id];
+        }
         public Color getColor(int id)
         {
             return colors[id];
+        }        
+        public int getReadingcount(int id)
+        {
+            return readingcounts[id];
         }
 
         public int Count()
