@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.picBox = new System.Windows.Forms.PictureBox();
+            this.picPicture = new System.Windows.Forms.PictureBox();
             this.lblReadingcount = new System.Windows.Forms.Label();
             this.txtReadingcount = new System.Windows.Forms.TextBox();
             this.lblAccu = new System.Windows.Forms.Label();
@@ -40,16 +40,17 @@
             this.prbWork = new System.Windows.Forms.ProgressBar();
             this.btnCommit = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
             this.SuspendLayout();
             // 
-            // picBox
+            // picPicture
             // 
-            this.picBox.Location = new System.Drawing.Point(13, 13);
-            this.picBox.Name = "picBox";
-            this.picBox.Size = new System.Drawing.Size(516, 290);
-            this.picBox.TabIndex = 0;
-            this.picBox.TabStop = false;
+            this.picPicture.Location = new System.Drawing.Point(13, 13);
+            this.picPicture.Name = "picPicture";
+            this.picPicture.Size = new System.Drawing.Size(516, 290);
+            this.picPicture.TabIndex = 0;
+            this.picPicture.TabStop = false;
+            this.picPicture.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picPicture_MouseDoubleClick);
             // 
             // lblReadingcount
             // 
@@ -114,12 +115,14 @@
             this.txtColorName.Name = "txtColorName";
             this.txtColorName.Size = new System.Drawing.Size(100, 20);
             this.txtColorName.TabIndex = 9;
+            this.txtColorName.Text = "0";
             // 
             // prbWork
             // 
             this.prbWork.Location = new System.Drawing.Point(13, 332);
             this.prbWork.Name = "prbWork";
             this.prbWork.Size = new System.Drawing.Size(777, 23);
+            this.prbWork.Step = 1;
             this.prbWork.TabIndex = 10;
             // 
             // btnCommit
@@ -139,6 +142,7 @@
             this.btnAbort.TabIndex = 12;
             this.btnAbort.Text = "Abbrechen";
             this.btnAbort.UseVisualStyleBackColor = true;
+            this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
             // 
             // ColorInsert
             // 
@@ -156,11 +160,11 @@
             this.Controls.Add(this.lblAccu);
             this.Controls.Add(this.txtReadingcount);
             this.Controls.Add(this.lblReadingcount);
-            this.Controls.Add(this.picBox);
+            this.Controls.Add(this.picPicture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "ColorInsert";
             this.Text = "Farbe hinzufügen";
-            ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,7 +172,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picBox;
+        private System.Windows.Forms.PictureBox picPicture;
         private System.Windows.Forms.Label lblReadingcount;
         private System.Windows.Forms.TextBox txtReadingcount;
         private System.Windows.Forms.Label lblAccu;

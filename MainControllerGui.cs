@@ -75,7 +75,7 @@ namespace bubblegum_sequencer
 
         private void farbverwaltungToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorManagerV2 colorManager = new ColorManagerV2();
+            ColorManagerV2 colorManager = new ColorManagerV2(source);
             colorList.add(colorManager);
 
             colorManager.Show();

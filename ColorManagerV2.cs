@@ -13,10 +13,12 @@ namespace bubblegum_sequencer
     public partial class ColorManagerV2 : Form, IObserver
     {
         ColorList colorlist;
+        VideoSource source;//Zwischenspeicher für ColorInsert
 
-        public ColorManagerV2()
+        public ColorManagerV2(VideoSource aSource)
         {
             InitializeComponent();
+            source = aSource;
         }
 
         public void update(IObserverable subject)
@@ -52,8 +54,15 @@ namespace bubblegum_sequencer
         {
             ColorInsert colorinsert = new ColorInsert();
             colorlist.add(colorinsert);
+            source.add(colorinsert);
+
 
             colorinsert.Show();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

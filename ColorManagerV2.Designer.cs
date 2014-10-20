@@ -134,6 +134,7 @@
             this.btnClose.TabIndex = 10;
             this.btnClose.Text = "Schließen";
             this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // ColorManagerV2
             // 
