@@ -31,8 +31,8 @@ namespace bubblegum_sequencer
         {
             lstColors.Items.Clear();
             for (int i = 0; i < colorlist.Count(); i++)
-            { 
-                lstColors.Items.Add((i+1).ToString() + colorlist.getColorName(i));
+            {
+                lstColors.Items.Add((i + 1).ToString() + colorlist.getColorName(i));
             }
         }
 
@@ -52,6 +52,13 @@ namespace bubblegum_sequencer
 
         private void btnAddColor_Click(object sender, EventArgs e)
         {
+            // Pruefen, ob Kamerabild da ist #Parasixx
+            if (source.Picture == null)
+            {
+                MessageBox.Show(this, "Bitte in den Kameraeinstellungen die Kamera auswählen, um die Farbe einzuscannen.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             ColorInsert colorinsert = new ColorInsert();
             colorlist.add(colorinsert);
             source.add(colorinsert);

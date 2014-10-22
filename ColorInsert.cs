@@ -34,6 +34,7 @@ namespace bubblegum_sequencer
                 VideoSource source;
 
                 source = (VideoSource)subject;
+
                 if (picWidth != source.Picture.Width)//Wenn sich Bildgröße geändert hat
                 {
                     double aspectRatio;
@@ -50,7 +51,8 @@ namespace bubblegum_sequencer
                     picWidth = source.Picture.Width;
                 }
 
-                picPicture.BackgroundImage = source.Picture;           
+                picPicture.BackgroundImage = source.Picture;
+
 
                 if (reading)//MESSUNG
                 {
@@ -110,7 +112,7 @@ namespace bubblegum_sequencer
             Point picPoint = e.Location;//Mausposition auf picturebox
 
             if (!reading)//Wenn nicht bereits eine Messung läuft, starte eine
-            {                
+            {
                 readingPos = getBitmapPoint(picPoint);//Mausposition auf Bitmap
                 if (txtReadingcount.Text == "")
                 {
@@ -121,9 +123,9 @@ namespace bubblegum_sequencer
                     readingcount = Convert.ToInt32(txtReadingcount.Text);//Messungsanzahl
                 }
                 prbWork.Value = 0;
-                prbWork.Maximum = readingcount;                
+                prbWork.Maximum = readingcount;
                 reading = true;//Messungen werden gestartet
-            }           
+            }
         }
 
         private Point getBitmapPoint(Point picPoint)
