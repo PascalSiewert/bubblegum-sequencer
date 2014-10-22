@@ -63,7 +63,9 @@ namespace bubblegum_sequencer
                         color = picture.GetPixel(readingPos.X, readingPos.Y);//Farbe an Position bestimmen
                         readings.Add(color);//Farbe zu den Messdaten hinzufügen
 
-                        prbWork.PerformStep();//Problem(Fliegt raus!)
+                        // Erweiterung SafeInvoke (ungetestete Loesung) #Parasixx
+                        prbWork.SafeInvoke(p => p.PerformStep());
+                        //prbWork.PerformStep();//Problem(Fliegt raus!)
 
                         readingcount--;
                     }
@@ -92,7 +94,11 @@ namespace bubblegum_sequencer
                         {
                             txtColorName.Text = acColor.Name;
                         }
-                        txtColor.Text = "R:" + acColor.R.ToString() + " | G:" + acColor.G.ToString() + " | B:" + acColor.B.ToString();//PROBLEM(Fliegt raus!)
+                        
+                        //Ungetestete Loesung SafeThreadExtension #Parasixx
+                        txtColor.SafeInvoke(t => t.Text = "R:" + acColor.R.ToString() + " | G:" + acColor.G.ToString() + " | B:" + acColor.B.ToString());
+
+                        //txtColor.Text = "R:" + acColor.R.ToString() + " | G:" + acColor.G.ToString() + " | B:" + acColor.B.ToString();//PROBLEM(Fliegt raus!)
                     }
                 }
             }
