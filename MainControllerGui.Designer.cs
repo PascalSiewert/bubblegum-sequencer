@@ -94,7 +94,7 @@
             0,
             0});
             this.numBPM.Minimum = new decimal(new int[] {
-            50,
+            40,
             0,
             0,
             0});

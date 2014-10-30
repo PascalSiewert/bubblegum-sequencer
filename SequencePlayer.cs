@@ -35,8 +35,8 @@ namespace bubblegum_sequencer
 
                 for (int i = 0; i < seq.getSize(); i++)
                 {
-                    seq.getToneByColor(i).play(output);
-
+                    seq.getToneByColorIndex(i).play(output);
+                       
                     try
                     {
                         seconds = 16 / (double) seq.getBPM() * 15 / 4;
@@ -46,9 +46,9 @@ namespace bubblegum_sequencer
                     {
                         isPlaying = false;
                         break;
-                    }
-
-                    seq.getToneByColor(i).stopSlowly(output);
+                    }                   
+                    
+                    seq.getToneByColorIndex(i).stopSlowly(output);
                 }                
             }
 

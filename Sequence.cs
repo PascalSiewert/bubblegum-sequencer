@@ -13,7 +13,7 @@ namespace bubblegum_sequencer
 
         private int bpm;
 
-        private Color[] colors = { Color.Black, Color.Gray, Color.Black, Color.Gray };
+        private Color[] colors = { Color.Black, Color.Black, Color.Black, Color.Black };
 
         public Sequence(ColorToneMap aMap, int aBPM)
         {
@@ -21,7 +21,7 @@ namespace bubblegum_sequencer
             bpm = aBPM;
         }
 
-        public Tone getToneByColor(int index)
+        public Tone getToneByColorIndex(int index)
         {
             Tone tone = ctMap.getToneByColor(colors[index]);
 
