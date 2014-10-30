@@ -39,7 +39,7 @@
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.chkFiltered = new System.Windows.Forms.CheckBox();
-            this.picPicture = new System.Windows.Forms.PictureBox();
+            this.picSequence = new System.Windows.Forms.PictureBox();
             this.lstCoTo = new System.Windows.Forms.ListBox();
             this.mnuBar = new System.Windows.Forms.MenuStrip();
             this.mnuBarFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,17 +49,13 @@
             this.mnuBarFileExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarEditOptions = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.kameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.farbverwaltungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSequence)).BeginInit();
             this.mnuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,12 +74,12 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 400);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(801, 52);
+            this.panel1.Size = new System.Drawing.Size(777, 52);
             this.panel1.TabIndex = 0;
             // 
             // txtTact
             // 
-            this.txtTact.Location = new System.Drawing.Point(738, 27);
+            this.txtTact.Location = new System.Drawing.Point(703, 27);
             this.txtTact.Name = "txtTact";
             this.txtTact.ReadOnly = true;
             this.txtTact.Size = new System.Drawing.Size(46, 20);
@@ -91,9 +87,9 @@
             // 
             // numBPM
             // 
-            this.numBPM.Location = new System.Drawing.Point(738, 3);
+            this.numBPM.Location = new System.Drawing.Point(703, 3);
             this.numBPM.Maximum = new decimal(new int[] {
-            200,
+            300,
             0,
             0,
             0});
@@ -106,15 +102,16 @@
             this.numBPM.Size = new System.Drawing.Size(46, 20);
             this.numBPM.TabIndex = 7;
             this.numBPM.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
+            this.numBPM.ValueChanged += new System.EventHandler(this.numBPM_ValueChanged);
             // 
             // lblTact
             // 
             this.lblTact.AutoSize = true;
-            this.lblTact.Location = new System.Drawing.Point(699, 27);
+            this.lblTact.Location = new System.Drawing.Point(664, 27);
             this.lblTact.Name = "lblTact";
             this.lblTact.Size = new System.Drawing.Size(32, 13);
             this.lblTact.TabIndex = 6;
@@ -123,7 +120,7 @@
             // lblBPM
             // 
             this.lblBPM.AutoSize = true;
-            this.lblBPM.Location = new System.Drawing.Point(699, 9);
+            this.lblBPM.Location = new System.Drawing.Point(664, 9);
             this.lblBPM.Name = "lblBPM";
             this.lblBPM.Size = new System.Drawing.Size(33, 13);
             this.lblBPM.TabIndex = 5;
@@ -153,6 +150,7 @@
             this.btnPlay.TabIndex = 2;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnPause
             // 
@@ -171,26 +169,25 @@
             this.btnStop.TabIndex = 0;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // chkFiltered
             // 
             this.chkFiltered.AutoSize = true;
-            this.chkFiltered.Location = new System.Drawing.Point(226, 360);
+            this.chkFiltered.Location = new System.Drawing.Point(690, 360);
             this.chkFiltered.Name = "chkFiltered";
             this.chkFiltered.Size = new System.Drawing.Size(60, 17);
             this.chkFiltered.TabIndex = 1;
             this.chkFiltered.Text = "gefiltert";
             this.chkFiltered.UseVisualStyleBackColor = true;
             // 
-            // picPicture
+            // picSequence
             // 
-            this.picPicture.BackColor = System.Drawing.Color.DarkGray;
-            this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPicture.Location = new System.Drawing.Point(226, 38);
-            this.picPicture.Name = "picPicture";
-            this.picPicture.Size = new System.Drawing.Size(562, 316);
-            this.picPicture.TabIndex = 2;
-            this.picPicture.TabStop = false;
+            this.picSequence.Location = new System.Drawing.Point(226, 38);
+            this.picSequence.Name = "picSequence";
+            this.picSequence.Size = new System.Drawing.Size(524, 316);
+            this.picSequence.TabIndex = 2;
+            this.picSequence.TabStop = false;
             // 
             // lstCoTo
             // 
@@ -208,7 +205,7 @@
             this.mnuBarHelp});
             this.mnuBar.Location = new System.Drawing.Point(0, 0);
             this.mnuBar.Name = "mnuBar";
-            this.mnuBar.Size = new System.Drawing.Size(801, 24);
+            this.mnuBar.Size = new System.Drawing.Size(777, 24);
             this.mnuBar.TabIndex = 4;
             this.mnuBar.Text = "Menueleiste";
             // 
@@ -249,11 +246,7 @@
             // mnuBarEdit
             // 
             this.mnuBarEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuBarEditOptions,
-            this.toolStripMenuItem1,
-            this.kameraToolStripMenuItem,
-            this.toolStripMenuItem2,
-            this.farbverwaltungToolStripMenuItem});
+            this.mnuBarEditOptions});
             this.mnuBarEdit.Name = "mnuBarEdit";
             this.mnuBarEdit.Size = new System.Drawing.Size(75, 20);
             this.mnuBarEdit.Text = "Bearbeiten";
@@ -261,20 +254,8 @@
             // mnuBarEditOptions
             // 
             this.mnuBarEditOptions.Name = "mnuBarEditOptions";
-            this.mnuBarEditOptions.Size = new System.Drawing.Size(156, 22);
+            this.mnuBarEditOptions.Size = new System.Drawing.Size(124, 22);
             this.mnuBarEditOptions.Text = "Optionen";
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(153, 6);
-            // 
-            // kameraToolStripMenuItem
-            // 
-            this.kameraToolStripMenuItem.Name = "kameraToolStripMenuItem";
-            this.kameraToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.kameraToolStripMenuItem.Text = "Kamera";
-            this.kameraToolStripMenuItem.Click += new System.EventHandler(this.kameraToolStripMenuItem_Click);
             // 
             // mnuBarHelp
             // 
@@ -297,37 +278,25 @@
             this.mnuBarHelpAbout.Size = new System.Drawing.Size(99, 22);
             this.mnuBarHelpAbout.Text = "Über";
             // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(153, 6);
-            // 
-            // farbverwaltungToolStripMenuItem
-            // 
-            this.farbverwaltungToolStripMenuItem.Name = "farbverwaltungToolStripMenuItem";
-            this.farbverwaltungToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.farbverwaltungToolStripMenuItem.Text = "Farbverwaltung";
-            this.farbverwaltungToolStripMenuItem.Click += new System.EventHandler(this.farbverwaltungToolStripMenuItem_Click);
-            // 
             // MainControllerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 452);
+            this.ClientSize = new System.Drawing.Size(777, 452);
             this.Controls.Add(this.lstCoTo);
-            this.Controls.Add(this.picPicture);
+            this.Controls.Add(this.picSequence);
             this.Controls.Add(this.chkFiltered);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mnuBar);
             this.MainMenuStrip = this.mnuBar;
             this.Name = "MainControllerGui";
             this.Text = "Bubblegum-Sequencer";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainControllerGui_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainControllerGui_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picSequence)).EndInit();
             this.mnuBar.ResumeLayout(false);
             this.mnuBar.PerformLayout();
             this.ResumeLayout(false);
@@ -344,7 +313,7 @@
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.CheckBox chkFiltered;
-        private System.Windows.Forms.PictureBox picPicture;
+        private System.Windows.Forms.PictureBox picSequence;
         private System.Windows.Forms.ListBox lstCoTo;
         private System.Windows.Forms.MenuStrip mnuBar;
         private System.Windows.Forms.ToolStripMenuItem mnuBarFile;
@@ -361,10 +330,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnuBarEditOptions;
         private System.Windows.Forms.ToolStripMenuItem mnuBarHelpHelp;
         private System.Windows.Forms.ToolStripMenuItem mnuBarHelpAbout;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem kameraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem farbverwaltungToolStripMenuItem;
     }
 }
 
