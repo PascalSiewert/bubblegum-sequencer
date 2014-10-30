@@ -34,6 +34,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge.Video">
+      <HintPath>extLibs\AForge\AForge.Video.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Video.DirectShow">
+      <HintPath>extLibs\AForge\AForge.Video.DirectShow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Midi">
       <HintPath>extLibs\midi-dot-net\Midi.dll</HintPath>
     </Reference>
@@ -49,7 +57,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cam.Designer.cs">
+      <DependentUpon>Cam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorList.cs" />
     <Compile Include="ColorToneMap.cs" />
+    <Compile Include="ColorInsert.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorInsert.Designer.cs">
+      <DependentUpon>ColorInsert.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorManagerV2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorManagerV2.Designer.cs">
+      <DependentUpon>ColorManagerV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IObserver.cs" />
+    <Compile Include="IObserverable.cs" />
     <Compile Include="MainControllerGui.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,11 +86,22 @@
       <DependentUpon>MainControllerGui.cs</DependentUpon>
     </Compile>
     <Compile Include="PercussionTone.cs" />
-    <Compile Include="SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SafeThreadExtension.cs" />
     <Compile Include="Sequence.cs" />
+    <Compile Include="SequencePlayer.cs" />
     <Compile Include="Tone.cs" />
+    <Compile Include="VideoSource.cs" />
+    <EmbeddedResource Include="Cam.resx">
+      <DependentUpon>Cam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorInsert.resx">
+      <DependentUpon>ColorInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorManagerV2.resx">
+      <DependentUpon>ColorManagerV2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainControllerGui.resx">
       <DependentUpon>MainControllerGui.cs</DependentUpon>
     </EmbeddedResource>
