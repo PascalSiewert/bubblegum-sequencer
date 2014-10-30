@@ -53,17 +53,5 @@ namespace bubblegum_sequencer
 
             return tone;
         }
-
-        public Tone getToneAt(int index)
-        {
-            return tones[index];
-        }
-
-        public int getSize()
-        {
-            int size = (tones.Count > colors.Count) ? colors.Count : tones.Count;
-
-            return size;
-        }
     }
 }

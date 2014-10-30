@@ -77,11 +77,8 @@
     <Compile Include="MainControllerGui.Designer.cs">
       <DependentUpon>MainControllerGui.cs</DependentUpon>
     </Compile>
-    <Compile Include="PercussionTone.cs" />
-    <Compile Include="SequencePlayer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sequence.cs" />
     <Compile Include="Tone.cs" />
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
