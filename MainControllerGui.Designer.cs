@@ -43,13 +43,13 @@
             this.lstCoTo = new System.Windows.Forms.ListBox();
             this.mnuBar = new System.Windows.Forms.MenuStrip();
             this.mnuBarFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuBarEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuBarHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuBarEditOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarFileExport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuBarFileExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarEditOptions = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
@@ -89,12 +89,12 @@
             // 
             this.numBPM.Location = new System.Drawing.Point(703, 3);
             this.numBPM.Maximum = new decimal(new int[] {
-            200,
+            300,
             0,
             0,
             0});
             this.numBPM.Minimum = new decimal(new int[] {
-            50,
+            40,
             0,
             0,
             0});
@@ -102,10 +102,11 @@
             this.numBPM.Size = new System.Drawing.Size(46, 20);
             this.numBPM.TabIndex = 7;
             this.numBPM.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
+            this.numBPM.ValueChanged += new System.EventHandler(this.numBPM_ValueChanged);
             // 
             // lblTact
             // 
@@ -149,6 +150,7 @@
             this.btnPlay.TabIndex = 2;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnPause
             // 
@@ -167,6 +169,7 @@
             this.btnStop.TabIndex = 0;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // chkFiltered
             // 
@@ -217,29 +220,6 @@
             this.mnuBarFile.Size = new System.Drawing.Size(46, 20);
             this.mnuBarFile.Text = "Datei";
             // 
-            // mnuBarEdit
-            // 
-            this.mnuBarEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuBarEditOptions});
-            this.mnuBarEdit.Name = "mnuBarEdit";
-            this.mnuBarEdit.Size = new System.Drawing.Size(75, 20);
-            this.mnuBarEdit.Text = "Bearbeiten";
-            // 
-            // mnuBarHelp
-            // 
-            this.mnuBarHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuBarHelpHelp,
-            this.mnuBarHelpAbout});
-            this.mnuBarHelp.Name = "mnuBarHelp";
-            this.mnuBarHelp.Size = new System.Drawing.Size(44, 20);
-            this.mnuBarHelp.Text = "Hilfe";
-            // 
-            // mnuBarEditOptions
-            // 
-            this.mnuBarEditOptions.Name = "mnuBarEditOptions";
-            this.mnuBarEditOptions.Size = new System.Drawing.Size(152, 22);
-            this.mnuBarEditOptions.Text = "Optionen";
-            // 
             // mnuBarFileSave
             // 
             this.mnuBarFileSave.Name = "mnuBarFileSave";
@@ -263,16 +243,39 @@
             this.mnuBarFileExit.Size = new System.Drawing.Size(157, 22);
             this.mnuBarFileExit.Text = "Beenden";
             // 
+            // mnuBarEdit
+            // 
+            this.mnuBarEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBarEditOptions});
+            this.mnuBarEdit.Name = "mnuBarEdit";
+            this.mnuBarEdit.Size = new System.Drawing.Size(75, 20);
+            this.mnuBarEdit.Text = "Bearbeiten";
+            // 
+            // mnuBarEditOptions
+            // 
+            this.mnuBarEditOptions.Name = "mnuBarEditOptions";
+            this.mnuBarEditOptions.Size = new System.Drawing.Size(124, 22);
+            this.mnuBarEditOptions.Text = "Optionen";
+            // 
+            // mnuBarHelp
+            // 
+            this.mnuBarHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuBarHelpHelp,
+            this.mnuBarHelpAbout});
+            this.mnuBarHelp.Name = "mnuBarHelp";
+            this.mnuBarHelp.Size = new System.Drawing.Size(44, 20);
+            this.mnuBarHelp.Text = "Hilfe";
+            // 
             // mnuBarHelpHelp
             // 
             this.mnuBarHelpHelp.Name = "mnuBarHelpHelp";
-            this.mnuBarHelpHelp.Size = new System.Drawing.Size(152, 22);
+            this.mnuBarHelpHelp.Size = new System.Drawing.Size(99, 22);
             this.mnuBarHelpHelp.Text = "Hilfe";
             // 
             // mnuBarHelpAbout
             // 
             this.mnuBarHelpAbout.Name = "mnuBarHelpAbout";
-            this.mnuBarHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.mnuBarHelpAbout.Size = new System.Drawing.Size(99, 22);
             this.mnuBarHelpAbout.Text = "Über";
             // 
             // MainControllerGui
@@ -288,6 +291,7 @@
             this.MainMenuStrip = this.mnuBar;
             this.Name = "MainControllerGui";
             this.Text = "Bubblegum-Sequencer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainControllerGui_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();
