@@ -106,10 +106,11 @@
             this.numBPM.Size = new System.Drawing.Size(46, 20);
             this.numBPM.TabIndex = 7;
             this.numBPM.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
+            this.numBPM.ValueChanged += new System.EventHandler(this.numBPM_ValueChanged);
             // 
             // lblTact
             // 
@@ -153,6 +154,7 @@
             this.btnPlay.TabIndex = 2;
             this.btnPlay.Text = "Play";
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnPause
             // 
@@ -171,6 +173,7 @@
             this.btnStop.TabIndex = 0;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // chkFiltered
             // 
@@ -323,6 +326,7 @@
             this.Name = "MainControllerGui";
             this.Text = "Bubblegum-Sequencer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainControllerGui_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainControllerGui_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();

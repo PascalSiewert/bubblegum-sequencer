@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Midi;
 
 namespace bubblegum_sequencer
 {
     class Tone
     {
-        private Note note;
+        private Pitch pitch;
+        private Instrument instrument;
 
-        public Tone(Note aNote)
+        public Tone(Pitch aPitch, Instrument aInstrument)
         {
-            note = aNote;
+            pitch = aPitch;
+            instrument = aInstrument;
         }
 
-        public void play()
+        public virtual void play(OutputDevice oDevice)
         {
+            oDevice.SendProgramChange(Channel.Channel1, instrument);
+            oDevice.SendNoteOn(Channel.Channel1, pitch, 80);
             
+        }
+
+        public void stopSlowly(OutputDevice oDevice)
+        {
+            oDevice.SendNoteOff(Channel.Channel1, pitch, 80);
         }
     }
 }
