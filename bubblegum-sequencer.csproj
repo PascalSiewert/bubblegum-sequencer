@@ -63,6 +63,12 @@
     <Compile Include="Cam.Designer.cs">
       <DependentUpon>Cam.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColorInsertALPHA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorInsertALPHA.Designer.cs">
+      <DependentUpon>ColorInsertALPHA.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorList.cs" />
     <Compile Include="ColorToneMap.cs" />
     <Compile Include="ColorInsert.cs">
@@ -98,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorInsert.resx">
       <DependentUpon>ColorInsert.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorInsertALPHA.resx">
+      <DependentUpon>ColorInsertALPHA.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorManagerV2.resx">
       <DependentUpon>ColorManagerV2.cs</DependentUpon>

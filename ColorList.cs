@@ -10,16 +10,16 @@ namespace bubblegum_sequencer
     {
         private List<String> colorNames;
         private List<Color> colors;
-        private List<int> readingcounts;//Anzahl der Messungen
+        //private List<int> readingcounts;//Anzahl der Messungen
 
         public ColorList()
         {
             colorNames = new List<string>();
             colors = new List<Color>();
-            readingcounts = new List<int>();
+            //readingcounts = new List<int>();
         }
 
-        public bool addColor(string colorName, Color color, int readingcount)
+        public bool addColor(string colorName, Color color)
         {
             bool colorInList = false;//Gibt an ob Farbe bereits in der Liste vorhanden ist
             bool success = false;
@@ -42,7 +42,7 @@ namespace bubblegum_sequencer
             {
                 colorNames.Add(colorName);
                 colors.Add(color);
-                readingcounts.Add(readingcount);
+                //readingcounts.Add(readingcount);
                 success = true;
             }
 
@@ -59,10 +59,10 @@ namespace bubblegum_sequencer
         {
             return colors[id];
         }        
-        public int getReadingcount(int id)
+        /*public int getReadingcount(int id)
         {
             return readingcounts[id];
-        }
+        }*/
 
         public int Count()
         {

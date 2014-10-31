@@ -32,7 +32,7 @@ namespace bubblegum_sequencer
             lstColors.Items.Clear();
             for (int i = 0; i < colorlist.Count(); i++)
             {
-                lstColors.Items.Add((i + 1).ToString() + colorlist.getColorName(i));
+                lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorName(i));
             }
         }
 
@@ -40,14 +40,15 @@ namespace bubblegum_sequencer
         {
             int i = lstColors.SelectedIndex;
 
-            txtColorName.Text = colorlist.getColorName(i);//Ruft Farbnamen des ausgewählten Elements ab
+            txtColorname.Text = colorlist.getColorName(i);//Ruft Farbnamen des ausgewählten Elements ab
 
             Color color = colorlist.getColor(i);//Ruft Farbe des ausgewählten Elements ab
-            txtColor.Text = "R:" + color.R.ToString() +
-                ";G:" + color.G.ToString() +
-                ";B:" + color.B.ToString();
+            txtRed.Text = color.R.ToString();
+            txtGreen.Text = color.G.ToString();
+            txtBlue.Text = color.B.ToString();
+            pnlColor.BackColor = color;
 
-            txtReadingcount.Text = colorlist.getReadingcount(i).ToString();//Ruft Messanzahl des ausgewählten Elements ab
+            //txtReadingcount.Text = colorlist.getReadingcount(i).ToString();//Ruft Messanzahl des ausgewählten Elements ab
         }
 
         private void btnAddColor_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace bubblegum_sequencer
                 return;
             }
 
-            ColorInsert colorinsert = new ColorInsert();
+            ColorInsertALPHA colorinsert = new ColorInsertALPHA();
             colorlist.add(colorinsert);
             source.add(colorinsert);
 
