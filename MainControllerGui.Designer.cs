@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainControllerGui));
             this.panel1 = new System.Windows.Forms.Panel();
             this.txtTact = new System.Windows.Forms.TextBox();
             this.numBPM = new System.Windows.Forms.NumericUpDown();
@@ -322,6 +323,7 @@
             this.Controls.Add(this.chkFiltered);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mnuBar);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mnuBar;
             this.Name = "MainControllerGui";
             this.Text = "Bubblegum-Sequencer";
