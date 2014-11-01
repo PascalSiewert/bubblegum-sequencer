@@ -41,7 +41,7 @@
             this.btnStop = new System.Windows.Forms.Button();
             this.chkGrid = new System.Windows.Forms.CheckBox();
             this.picPicture = new System.Windows.Forms.PictureBox();
-            this.lstCoTo = new System.Windows.Forms.ListBox();
+            this.lstColorTone = new System.Windows.Forms.ListBox();
             this.mnuBar = new System.Windows.Forms.MenuStrip();
             this.mnuBarFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarFileSave = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,6 +61,7 @@
             this.txtY = new System.Windows.Forms.TextBox();
             this.btnGetColor = new System.Windows.Forms.Button();
             this.txtColor = new System.Windows.Forms.TextBox();
+            this.cbxTone = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
@@ -202,13 +203,13 @@
             this.picPicture.TabStop = false;
             this.picPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.picPicture_Paint);
             // 
-            // lstCoTo
+            // lstColorTone
             // 
-            this.lstCoTo.FormattingEnabled = true;
-            this.lstCoTo.Location = new System.Drawing.Point(12, 38);
-            this.lstCoTo.Name = "lstCoTo";
-            this.lstCoTo.Size = new System.Drawing.Size(175, 316);
-            this.lstCoTo.TabIndex = 3;
+            this.lstColorTone.FormattingEnabled = true;
+            this.lstColorTone.Location = new System.Drawing.Point(12, 38);
+            this.lstColorTone.Name = "lstColorTone";
+            this.lstColorTone.Size = new System.Drawing.Size(175, 316);
+            this.lstColorTone.TabIndex = 3;
             // 
             // mnuBar
             // 
@@ -321,45 +322,62 @@
             // 
             // txtX
             // 
+            this.txtX.Enabled = false;
             this.txtX.Location = new System.Drawing.Point(285, 360);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(100, 20);
             this.txtX.TabIndex = 5;
+            this.txtX.Visible = false;
             // 
             // txtY
             // 
+            this.txtY.Enabled = false;
             this.txtY.Location = new System.Drawing.Point(391, 360);
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(100, 20);
             this.txtY.TabIndex = 6;
+            this.txtY.Visible = false;
             // 
             // btnGetColor
             // 
+            this.btnGetColor.Enabled = false;
             this.btnGetColor.Location = new System.Drawing.Point(497, 358);
             this.btnGetColor.Name = "btnGetColor";
             this.btnGetColor.Size = new System.Drawing.Size(75, 23);
             this.btnGetColor.TabIndex = 7;
             this.btnGetColor.Text = "GetColor";
             this.btnGetColor.UseVisualStyleBackColor = true;
+            this.btnGetColor.Visible = false;
             this.btnGetColor.Click += new System.EventHandler(this.btnGetColor_Click);
             // 
             // txtColor
             // 
+            this.txtColor.Enabled = false;
             this.txtColor.Location = new System.Drawing.Point(578, 360);
             this.txtColor.Name = "txtColor";
             this.txtColor.Size = new System.Drawing.Size(100, 20);
             this.txtColor.TabIndex = 8;
+            this.txtColor.Visible = false;
+            // 
+            // cbxTone
+            // 
+            this.cbxTone.FormattingEnabled = true;
+            this.cbxTone.Location = new System.Drawing.Point(12, 358);
+            this.cbxTone.Name = "cbxTone";
+            this.cbxTone.Size = new System.Drawing.Size(175, 21);
+            this.cbxTone.TabIndex = 9;
             // 
             // MainControllerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 452);
+            this.Controls.Add(this.cbxTone);
             this.Controls.Add(this.txtColor);
             this.Controls.Add(this.btnGetColor);
             this.Controls.Add(this.txtY);
             this.Controls.Add(this.txtX);
-            this.Controls.Add(this.lstCoTo);
+            this.Controls.Add(this.lstColorTone);
             this.Controls.Add(this.picPicture);
             this.Controls.Add(this.chkGrid);
             this.Controls.Add(this.panel1);
@@ -391,7 +409,7 @@
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.CheckBox chkGrid;
         private System.Windows.Forms.PictureBox picPicture;
-        private System.Windows.Forms.ListBox lstCoTo;
+        private System.Windows.Forms.ListBox lstColorTone;
         private System.Windows.Forms.MenuStrip mnuBar;
         private System.Windows.Forms.ToolStripMenuItem mnuBarFile;
         private System.Windows.Forms.ToolStripMenuItem mnuBarEdit;
@@ -415,6 +433,7 @@
         private System.Windows.Forms.TextBox txtY;
         private System.Windows.Forms.Button btnGetColor;
         private System.Windows.Forms.TextBox txtColor;
+        private System.Windows.Forms.ComboBox cbxTone;
     }
 }
 

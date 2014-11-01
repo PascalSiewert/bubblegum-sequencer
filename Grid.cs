@@ -20,7 +20,7 @@ namespace bubblegum_sequencer
             Cols = aCols;
         }
 
-        public void draw(Graphics graphic, Size aSize)
+        public void draw(Graphics graphic, Size aSize)//Zeichne Gitter
         {           
             int rowheight = Convert.ToInt32((double)aSize.Height / (double)(Rows + 1));
             int colwidth = Convert.ToInt32((double)aSize.Width / (double)(Cols + 1));
@@ -88,7 +88,7 @@ namespace bubblegum_sequencer
             }
         }
 
-        public void calcIntersections()
+        public void calcIntersections()//Berechnet wo sich die Schnittpunkte des Gitters befinden und speichert diese in intersections
         {
             intersections = new Point[Cols, Rows];
 
@@ -106,7 +106,7 @@ namespace bubblegum_sequencer
             intersectionsCalculated = true;
         }
 
-        public Point getIntersectionAt(int colIndex, int rowIndex)
+        public Point getIntersectionAt(int colIndex, int rowIndex)//Gibt die Koordinaten eines bestimmten Schnittpunkts
         {
             Point intersection = new Point(0,0);
             if (intersectionsCalculated)
@@ -123,13 +123,13 @@ namespace bubblegum_sequencer
             return intersection;
         }
 
-        public Color getColorAtIntersection(int colIndex, int rowIndex, Bitmap picture)
+        public Color getColorAtIntersection(int colIndex, int rowIndex, Bitmap picture)//Gibt die Farbe an den Koordinaten eines Schnittpunkten auf dem Bild zurück
         {
             Point intersection = getIntersectionAt(colIndex, rowIndex);
             return picture.GetPixel(intersection.X, intersection.Y);
         }
 
-        public void setSize(Size aSize)
+        public void setSize(Size aSize)//Setzt Bildgröße
         {
             size = aSize;
         }
