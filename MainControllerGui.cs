@@ -36,7 +36,8 @@ namespace bubblegum_sequencer
             ColorToneMap map = new ColorToneMap();
 
             map.addColor(new Tone(Pitch.D4, Instrument.AcousticGrandPiano), Color.Black);
-            //map.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
+            map.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
+            map.addColor(new Tone(Pitch.A4, Instrument.AcousticGuitarSteel), Color.Blue);
 
             sequence = new Sequence(map, (int)numBPM.Value);
 

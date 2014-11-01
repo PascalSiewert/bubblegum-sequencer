@@ -13,7 +13,7 @@ namespace bubblegum_sequencer
 
         private int bpm;
 
-        private Color[] colors = { Color.Black, Color.Black, Color.Black, Color.Black };
+        private Color[] colors = { Color.Black, Color.Gray, Color.Black, Color.Blue, Color.Gray };
 
         public Sequence(ColorToneMap aMap, int aBPM)
         {
