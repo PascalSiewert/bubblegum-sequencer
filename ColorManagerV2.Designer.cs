@@ -141,6 +141,7 @@
             this.txtColorname.Name = "txtColorname";
             this.txtColorname.Size = new System.Drawing.Size(104, 20);
             this.txtColorname.TabIndex = 7;
+            this.txtColorname.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtColorname_KeyDown);
             // 
             // pnlColor
             // 

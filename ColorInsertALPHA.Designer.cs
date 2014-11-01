@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorInsertALPHA));
             this.picPicture = new System.Windows.Forms.PictureBox();
             this.gbxMeasure = new System.Windows.Forms.GroupBox();
             this.pnlMeasureColor = new System.Windows.Forms.Panel();
@@ -57,6 +58,8 @@
             // 
             // picPicture
             // 
+            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
+            this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picPicture.Location = new System.Drawing.Point(12, 12);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(516, 290);

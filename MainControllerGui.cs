@@ -16,6 +16,7 @@ namespace bubblegum_sequencer
     {
         public VideoSource source;
         private ColorList colorList;
+        public Grid grid;
 
         private OutputDevice output;
         private Sequence sequence;
@@ -25,8 +26,10 @@ namespace bubblegum_sequencer
         {
             InitializeComponent();
             source = new VideoSource();
+            grid = new Grid(1, 1);
             colorList = new ColorList();
             source.add(this);
+            grid.add(this);
 
             output = OutputDevice.InstalledDevices[0];
 
@@ -68,6 +71,8 @@ namespace bubblegum_sequencer
                     videoSource.Start();//Startet Videoquelle
                     connection = true;
                 }
+                grid.setSize(picPicture.Size);
+                grid.calcIntersections();
             }
         }//startet Stream
 
@@ -83,7 +88,7 @@ namespace bubblegum_sequencer
         //GUI
         private void kameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Cam Camoptions = new Cam(this, videoSource, source);
+            Cam Camoptions = new Cam(this, videoSource, source, grid);
             source.add(Camoptions);
 
             Camoptions.Show();
@@ -112,9 +117,14 @@ namespace bubblegum_sequencer
             //HIER: Bildanalyse   
             try
             {
-                picPicture.BackgroundImage = ((VideoSource)subject).Picture;
+                picPicture.Image = ((VideoSource)subject).Picture;
             }
             catch { }
+
+            if (subject is Grid)
+            {
+                grid = (Grid)subject;
+            }
         }
 
         private void btnPlay_Click(object sender, EventArgs e)
@@ -130,6 +140,23 @@ namespace bubblegum_sequencer
         private void numBPM_ValueChanged(object sender, EventArgs e)
         {
             sequence.setBPM((int)numBPM.Value);
+        }
+
+        private void picPicture_Paint(object sender, PaintEventArgs e)
+        {
+            if (chkGrid.Checked)
+            {
+                grid.draw(e.Graphics, picPicture.Size);
+            }
+        }
+
+        private void btnGetColor_Click(object sender, EventArgs e)
+        {
+            Color testcolor = grid.getColorAtIntersection(Convert.ToInt32(txtX.Text), Convert.ToInt32(txtY.Text), (Bitmap)picPicture.Image);
+
+            txtColor.Text = "R:" + testcolor.R.ToString() + "| G:" + testcolor.G.ToString() + "| B:" + testcolor.B.ToString();
+
+            btnGetColor.BackColor = testcolor;
         }
     }
 }

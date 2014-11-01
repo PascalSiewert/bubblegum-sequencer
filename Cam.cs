@@ -18,8 +18,9 @@ namespace bubblegum_sequencer
         VideoCapabilities oldResolution;
         string oldMonkierString;
         VideoSource source;
+        public Grid grid;
 
-        public Cam(MainControllerGui form,  VideoCaptureDevice aVideoSource, VideoSource aSource)
+        public Cam(MainControllerGui form,  VideoCaptureDevice aVideoSource, VideoSource aSource, Grid aGrid)
         {
             InitializeComponent();
 
@@ -35,6 +36,8 @@ namespace bubblegum_sequencer
             videoSource = aVideoSource;
 
             source = aSource;//Übergabe des Obeserverable, um von Cam aus Bilder zu verteilen
+
+            grid = aGrid;
         }
 
         FilterInfoCollection videosources;//Kameraliste
@@ -189,9 +192,15 @@ namespace bubblegum_sequencer
 
         public void update(IObserverable subject)
         {
-            picPicture.BackgroundImage = ((VideoSource)subject).Picture;
+            picPicture.Image = ((VideoSource)subject).Picture;
 
             //HIER: Bildanalyse
+        }
+
+        private void btnJustification_Click(object sender, EventArgs e)
+        {           
+            grid.Cols = Convert.ToInt32(txtColumns.Text);
+            grid.Rows = Convert.ToInt32(txtRows.Text);
         }
     }
 }

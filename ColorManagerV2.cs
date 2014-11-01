@@ -32,7 +32,7 @@ namespace bubblegum_sequencer
             lstColors.Items.Clear();
             for (int i = 0; i < colorlist.Count(); i++)
             {
-                lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorName(i));
+                lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorname(i));
             }
         }
 
@@ -40,7 +40,7 @@ namespace bubblegum_sequencer
         {
             int i = lstColors.SelectedIndex;
 
-            txtColorname.Text = colorlist.getColorName(i);//Ruft Farbnamen des ausgewählten Elements ab
+            txtColorname.Text = colorlist.getColorname(i);//Ruft Farbnamen des ausgewählten Elements ab
 
             Color color = colorlist.getColor(i);//Ruft Farbe des ausgewählten Elements ab
             txtRed.Text = color.R.ToString();
@@ -68,9 +68,27 @@ namespace bubblegum_sequencer
             colorinsert.Show();
         }
 
+        private void txtColorname_KeyDown(object sender, KeyEventArgs e)//Ändert Farbname
+        {
+            if (e.KeyCode == Keys.Return)//Wenn Return gedrückt wurde
+            {
+                if (lstColors.SelectedIndex >= 0)//Wenn eine Farbe ausgewählt ist
+                {
+                    bool success;//Gibt an, ob Änderung wirksam ist
+
+                    success = colorlist.changeColorname(lstColors.SelectedIndex, txtColorname.Text);//Versucht Farbname zu ändern
+
+                    if (!success)//Überprüft, ob die Änderung wirksam war
+                    {
+                        MessageBox.Show(this, "Stellen Sie sicher, dass der Farbname nicht bereits verwendet wurde.", "Farbänderung fehlgeschlagen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }       
+
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
+        }       
     }
 }

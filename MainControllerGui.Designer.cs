@@ -39,7 +39,7 @@
             this.btnPlay = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
-            this.chkFiltered = new System.Windows.Forms.CheckBox();
+            this.chkGrid = new System.Windows.Forms.CheckBox();
             this.picPicture = new System.Windows.Forms.PictureBox();
             this.lstCoTo = new System.Windows.Forms.ListBox();
             this.mnuBar = new System.Windows.Forms.MenuStrip();
@@ -57,6 +57,10 @@
             this.mnuBarHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuBarHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtX = new System.Windows.Forms.TextBox();
+            this.txtY = new System.Windows.Forms.TextBox();
+            this.btnGetColor = new System.Windows.Forms.Button();
+            this.txtColor = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
@@ -176,25 +180,27 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // chkFiltered
+            // chkGrid
             // 
-            this.chkFiltered.AutoSize = true;
-            this.chkFiltered.Location = new System.Drawing.Point(226, 360);
-            this.chkFiltered.Name = "chkFiltered";
-            this.chkFiltered.Size = new System.Drawing.Size(60, 17);
-            this.chkFiltered.TabIndex = 1;
-            this.chkFiltered.Text = "gefiltert";
-            this.chkFiltered.UseVisualStyleBackColor = true;
+            this.chkGrid.AutoSize = true;
+            this.chkGrid.Location = new System.Drawing.Point(226, 360);
+            this.chkGrid.Name = "chkGrid";
+            this.chkGrid.Size = new System.Drawing.Size(51, 17);
+            this.chkGrid.TabIndex = 1;
+            this.chkGrid.Text = "Gitter";
+            this.chkGrid.UseVisualStyleBackColor = true;
             // 
             // picPicture
             // 
             this.picPicture.BackColor = System.Drawing.Color.DarkGray;
+            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
             this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picPicture.Location = new System.Drawing.Point(226, 38);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(562, 316);
             this.picPicture.TabIndex = 2;
             this.picPicture.TabStop = false;
+            this.picPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.picPicture_Paint);
             // 
             // lstCoTo
             // 
@@ -313,14 +319,49 @@
             this.mnuBarHelpAbout.Size = new System.Drawing.Size(99, 22);
             this.mnuBarHelpAbout.Text = "Über";
             // 
+            // txtX
+            // 
+            this.txtX.Location = new System.Drawing.Point(285, 360);
+            this.txtX.Name = "txtX";
+            this.txtX.Size = new System.Drawing.Size(100, 20);
+            this.txtX.TabIndex = 5;
+            // 
+            // txtY
+            // 
+            this.txtY.Location = new System.Drawing.Point(391, 360);
+            this.txtY.Name = "txtY";
+            this.txtY.Size = new System.Drawing.Size(100, 20);
+            this.txtY.TabIndex = 6;
+            // 
+            // btnGetColor
+            // 
+            this.btnGetColor.Location = new System.Drawing.Point(497, 358);
+            this.btnGetColor.Name = "btnGetColor";
+            this.btnGetColor.Size = new System.Drawing.Size(75, 23);
+            this.btnGetColor.TabIndex = 7;
+            this.btnGetColor.Text = "GetColor";
+            this.btnGetColor.UseVisualStyleBackColor = true;
+            this.btnGetColor.Click += new System.EventHandler(this.btnGetColor_Click);
+            // 
+            // txtColor
+            // 
+            this.txtColor.Location = new System.Drawing.Point(578, 360);
+            this.txtColor.Name = "txtColor";
+            this.txtColor.Size = new System.Drawing.Size(100, 20);
+            this.txtColor.TabIndex = 8;
+            // 
             // MainControllerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 452);
+            this.Controls.Add(this.txtColor);
+            this.Controls.Add(this.btnGetColor);
+            this.Controls.Add(this.txtY);
+            this.Controls.Add(this.txtX);
             this.Controls.Add(this.lstCoTo);
             this.Controls.Add(this.picPicture);
-            this.Controls.Add(this.chkFiltered);
+            this.Controls.Add(this.chkGrid);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mnuBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -348,7 +389,7 @@
         private System.Windows.Forms.Button btnPlay;
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.CheckBox chkFiltered;
+        private System.Windows.Forms.CheckBox chkGrid;
         private System.Windows.Forms.PictureBox picPicture;
         private System.Windows.Forms.ListBox lstCoTo;
         private System.Windows.Forms.MenuStrip mnuBar;
@@ -370,6 +411,10 @@
         private System.Windows.Forms.ToolStripMenuItem kameraToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem farbverwaltungToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtX;
+        private System.Windows.Forms.TextBox txtY;
+        private System.Windows.Forms.Button btnGetColor;
+        private System.Windows.Forms.TextBox txtColor;
     }
 }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cam));
             this.lbl_header = new System.Windows.Forms.Label();
             this.lblCam = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -160,6 +161,7 @@
             this.btnJustification.TabIndex = 6;
             this.btnJustification.Text = "Justieren";
             this.btnJustification.UseVisualStyleBackColor = true;
+            this.btnJustification.Click += new System.EventHandler(this.btnJustification_Click);
             // 
             // txtRows
             // 
@@ -196,6 +198,7 @@
             // cbxCornerColor
             // 
             this.cbxCornerColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxCornerColor.Enabled = false;
             this.cbxCornerColor.FormattingEnabled = true;
             this.cbxCornerColor.Location = new System.Drawing.Point(93, 17);
             this.cbxCornerColor.Name = "cbxCornerColor";
@@ -205,6 +208,7 @@
             // lblCornerColor
             // 
             this.lblCornerColor.AutoSize = true;
+            this.lblCornerColor.Enabled = false;
             this.lblCornerColor.Location = new System.Drawing.Point(7, 20);
             this.lblCornerColor.Name = "lblCornerColor";
             this.lblCornerColor.Size = new System.Drawing.Size(80, 13);
@@ -234,6 +238,7 @@
             // picPicture
             // 
             this.picPicture.BackColor = System.Drawing.Color.DarkGray;
+            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
             this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picPicture.Location = new System.Drawing.Point(278, 54);

@@ -44,7 +44,7 @@ namespace bubblegum_sequencer
                     picWidth = source.Picture.Width;
                 }
 
-                picPicture.BackgroundImage = source.Picture;
+                picPicture.Image = source.Picture;
             }
             else if (subject is ColorList)
             {
@@ -55,8 +55,8 @@ namespace bubblegum_sequencer
         //Farbe ermitteln
         private void picPicture_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            Point measurePoint = getBitmapPoint(e.Location);
-            Bitmap measurePicture = (Bitmap)picPicture.BackgroundImage;
+            Point measurePoint = e.Location;//getBitmapPoint(e.Location);
+            Bitmap measurePicture = (Bitmap)picPicture.Image;
             Color color = measurePicture.GetPixel(measurePoint.X, measurePoint.Y);
 
             //gemessene Farbe in Textboxen eintragen

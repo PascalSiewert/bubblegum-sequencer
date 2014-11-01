@@ -86,6 +86,7 @@
     <Compile Include="ColorManagerV2.Designer.cs">
       <DependentUpon>ColorManagerV2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Grid.cs" />
     <Compile Include="IObserver.cs" />
     <Compile Include="IObserverable.cs" />
     <Compile Include="MainControllerGui.cs">
