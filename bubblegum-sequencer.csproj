@@ -102,6 +102,12 @@
     <Compile Include="Sequence.cs" />
     <Compile Include="SequencePlayer.cs" />
     <Compile Include="Tone.cs" />
+    <Compile Include="ToneMapping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToneMapping.Designer.cs">
+      <DependentUpon>ToneMapping.cs</DependentUpon>
+    </Compile>
     <Compile Include="VideoSource.cs" />
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
@@ -127,6 +133,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ToneMapping.resx">
+      <DependentUpon>ToneMapping.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
