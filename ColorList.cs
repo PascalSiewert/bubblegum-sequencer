@@ -65,6 +65,28 @@ namespace bubblegum_sequencer
         {
             return colornames[id];
         }
+        public string getColornameByColor(Color aColor)
+        {
+            for (int i = 0; i < getCount(); i++)
+            {
+                if (colors[i] == aColor)
+                {
+                    return colornames[i];
+                }
+            }
+            return null;
+        }
+        public Color getColorByColorname(string aColorname)
+        {
+            for (int i = 0; i < getCount(); i++)
+            {
+                if (colornames[i] == aColorname)
+                {
+                    return colors[i];
+                }
+            }
+            return Color.Black;
+        }
         public Color getColor(int id)
         {
             return colors[id];
@@ -74,7 +96,7 @@ namespace bubblegum_sequencer
             return readingcounts[id];
         }*/
 
-        public int Count()//Anzahl der Farben
+        public int getCount()//Anzahl der Farben
         {
             return colors.Count;
         }

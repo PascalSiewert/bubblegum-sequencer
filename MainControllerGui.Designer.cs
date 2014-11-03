@@ -61,7 +61,8 @@
             this.txtY = new System.Windows.Forms.TextBox();
             this.btnGetColor = new System.Windows.Forms.Button();
             this.txtColor = new System.Windows.Forms.TextBox();
-            this.cbxTone = new System.Windows.Forms.ComboBox();
+            this.cbxInstrument = new System.Windows.Forms.ComboBox();
+            this.cbxPitch = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
@@ -84,7 +85,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 400);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(801, 52);
+            this.panel1.Size = new System.Drawing.Size(857, 52);
             this.panel1.TabIndex = 0;
             // 
             // txtTact
@@ -184,7 +185,7 @@
             // chkGrid
             // 
             this.chkGrid.AutoSize = true;
-            this.chkGrid.Location = new System.Drawing.Point(226, 360);
+            this.chkGrid.Location = new System.Drawing.Point(283, 360);
             this.chkGrid.Name = "chkGrid";
             this.chkGrid.Size = new System.Drawing.Size(51, 17);
             this.chkGrid.TabIndex = 1;
@@ -196,7 +197,7 @@
             this.picPicture.BackColor = System.Drawing.Color.DarkGray;
             this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
             this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPicture.Location = new System.Drawing.Point(226, 38);
+            this.picPicture.Location = new System.Drawing.Point(283, 38);
             this.picPicture.Name = "picPicture";
             this.picPicture.Size = new System.Drawing.Size(562, 316);
             this.picPicture.TabIndex = 2;
@@ -206,10 +207,12 @@
             // lstColorTone
             // 
             this.lstColorTone.FormattingEnabled = true;
+            this.lstColorTone.HorizontalScrollbar = true;
             this.lstColorTone.Location = new System.Drawing.Point(12, 38);
             this.lstColorTone.Name = "lstColorTone";
-            this.lstColorTone.Size = new System.Drawing.Size(175, 316);
+            this.lstColorTone.Size = new System.Drawing.Size(265, 316);
             this.lstColorTone.TabIndex = 3;
+            this.lstColorTone.SelectedIndexChanged += new System.EventHandler(this.lstColorTone_SelectedIndexChanged);
             // 
             // mnuBar
             // 
@@ -219,7 +222,7 @@
             this.mnuBarHelp});
             this.mnuBar.Location = new System.Drawing.Point(0, 0);
             this.mnuBar.Name = "mnuBar";
-            this.mnuBar.Size = new System.Drawing.Size(801, 24);
+            this.mnuBar.Size = new System.Drawing.Size(857, 24);
             this.mnuBar.TabIndex = 4;
             this.mnuBar.Text = "Menueleiste";
             // 
@@ -323,7 +326,7 @@
             // txtX
             // 
             this.txtX.Enabled = false;
-            this.txtX.Location = new System.Drawing.Point(285, 360);
+            this.txtX.Location = new System.Drawing.Point(342, 360);
             this.txtX.Name = "txtX";
             this.txtX.Size = new System.Drawing.Size(100, 20);
             this.txtX.TabIndex = 5;
@@ -332,7 +335,7 @@
             // txtY
             // 
             this.txtY.Enabled = false;
-            this.txtY.Location = new System.Drawing.Point(391, 360);
+            this.txtY.Location = new System.Drawing.Point(448, 360);
             this.txtY.Name = "txtY";
             this.txtY.Size = new System.Drawing.Size(100, 20);
             this.txtY.TabIndex = 6;
@@ -341,7 +344,7 @@
             // btnGetColor
             // 
             this.btnGetColor.Enabled = false;
-            this.btnGetColor.Location = new System.Drawing.Point(497, 358);
+            this.btnGetColor.Location = new System.Drawing.Point(554, 358);
             this.btnGetColor.Name = "btnGetColor";
             this.btnGetColor.Size = new System.Drawing.Size(75, 23);
             this.btnGetColor.TabIndex = 7;
@@ -353,26 +356,39 @@
             // txtColor
             // 
             this.txtColor.Enabled = false;
-            this.txtColor.Location = new System.Drawing.Point(578, 360);
+            this.txtColor.Location = new System.Drawing.Point(635, 360);
             this.txtColor.Name = "txtColor";
             this.txtColor.Size = new System.Drawing.Size(100, 20);
             this.txtColor.TabIndex = 8;
             this.txtColor.Visible = false;
             // 
-            // cbxTone
+            // cbxInstrument
             // 
-            this.cbxTone.FormattingEnabled = true;
-            this.cbxTone.Location = new System.Drawing.Point(12, 358);
-            this.cbxTone.Name = "cbxTone";
-            this.cbxTone.Size = new System.Drawing.Size(175, 21);
-            this.cbxTone.TabIndex = 9;
+            this.cbxInstrument.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxInstrument.FormattingEnabled = true;
+            this.cbxInstrument.Location = new System.Drawing.Point(12, 356);
+            this.cbxInstrument.Name = "cbxInstrument";
+            this.cbxInstrument.Size = new System.Drawing.Size(175, 21);
+            this.cbxInstrument.TabIndex = 9;
+            this.cbxInstrument.SelectedIndexChanged += new System.EventHandler(this.cbxInstrument_SelectedIndexChanged);
+            // 
+            // cbxPitch
+            // 
+            this.cbxPitch.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPitch.FormattingEnabled = true;
+            this.cbxPitch.Location = new System.Drawing.Point(193, 356);
+            this.cbxPitch.Name = "cbxPitch";
+            this.cbxPitch.Size = new System.Drawing.Size(84, 21);
+            this.cbxPitch.TabIndex = 10;
+            this.cbxPitch.SelectedIndexChanged += new System.EventHandler(this.cbxPitch_SelectedIndexChanged);
             // 
             // MainControllerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 452);
-            this.Controls.Add(this.cbxTone);
+            this.ClientSize = new System.Drawing.Size(857, 452);
+            this.Controls.Add(this.cbxPitch);
+            this.Controls.Add(this.cbxInstrument);
             this.Controls.Add(this.txtColor);
             this.Controls.Add(this.btnGetColor);
             this.Controls.Add(this.txtY);
@@ -433,7 +449,8 @@
         private System.Windows.Forms.TextBox txtY;
         private System.Windows.Forms.Button btnGetColor;
         private System.Windows.Forms.TextBox txtColor;
-        private System.Windows.Forms.ComboBox cbxTone;
+        private System.Windows.Forms.ComboBox cbxInstrument;
+        private System.Windows.Forms.ComboBox cbxPitch;
     }
 }
 

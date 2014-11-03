@@ -30,7 +30,7 @@ namespace bubblegum_sequencer
         private void ColorListRefresh()//Refresh für die ColorList
         {
             lstColors.Items.Clear();
-            for (int i = 0; i < colorlist.Count(); i++)
+            for (int i = 0; i < colorlist.getCount(); i++)
             {
                 lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorname(i));
             }

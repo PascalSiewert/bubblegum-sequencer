@@ -29,5 +29,16 @@ namespace bubblegum_sequencer
         {
             oDevice.SendNoteOff(Channel.Channel1, pitch, 80);
         }
+
+        public String getPitchName()
+        {
+            return pitch.ToString();
+        }
+
+        public String getInstrumentName()
+        {
+            return instrument.ToString();
+        }
+
     }
 }

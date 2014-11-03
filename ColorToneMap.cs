@@ -21,7 +21,7 @@ namespace bubblegum_sequencer
         {
             bool success = false;
 
-            if (!tones.Contains(key) && !colors.Contains(color))
+            if (!colors.Contains(color))
             {
                 tones.Add(key);
                 colors.Add(color);
@@ -31,7 +31,17 @@ namespace bubblegum_sequencer
             return success;
         }
 
-        public bool deleteColorByColor(Color aColor)//Löscht Farb-Ton-Zuordnung nach Angabe der Farbe(Ungetestet)
+        public bool modifyToneByID(int id, Tone key)//Ändert Ton bei bestimmter Kombination
+        {
+            bool success = false;
+
+            tones[id] = key;
+            success = true;
+
+            return success;
+        }
+
+        public bool deleteColorToneByColor(Color aColor)//Löscht Farb-Ton-Zuordnung nach Angabe der Farbe(Ungetestet)
         {
             bool success = false;
 
@@ -40,9 +50,25 @@ namespace bubblegum_sequencer
                 if (colors[i] == aColor)
                 {
                     colors.RemoveAt(i);
+                    tones.RemoveAt(i);
                     i--;
                 }
             }
+
+            return success;
+        }
+
+        public bool deleteColorToneByID(int id)
+        {
+            bool success = false;
+
+            try
+            {
+                tones.RemoveAt(id);
+                colors.RemoveAt(id);
+                success = true;
+            }
+            catch { };
 
             return success;
         }
@@ -68,6 +94,11 @@ namespace bubblegum_sequencer
             }
 
             return tone;
+        }
+
+        public Color getColorByID(int i)
+        {
+            return colors[i];
         }
 
         public Tone getToneAt(int index)//Ton nach Index erhalten

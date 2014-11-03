@@ -17,29 +17,37 @@ namespace bubblegum_sequencer
         public VideoSource source;
         private ColorList colorList;
         public Grid grid;
+        ColorToneMap colorToneMap;
 
         private OutputDevice output;
         private Sequence sequence;
-        private SequencePlayer player;    
+        private SequencePlayer player;
+        private List<Color> nonListedColors = new List<Color>();
+
+        bool colorToneInChange = false;//Gibt an, ob gerade eine andere Kombination ausgewählt wird
 
         public MainControllerGui()
         {
             InitializeComponent();
             source = new VideoSource();
             grid = new Grid(1, 1);
+            colorToneMap = new ColorToneMap();
             colorList = new ColorList();
             source.add(this);
             grid.add(this);
+            colorList.add(this);          
 
             output = OutputDevice.InstalledDevices[0];
+      
+            //TEST BEGINN
+            colorToneMap.addColor(new Tone(Pitch.D4, Instrument.AcousticGrandPiano), Color.Black);
+            colorToneMap.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
+            colorToneMap.addColor(new Tone(Pitch.A4, Instrument.AcousticGuitarSteel), Color.Blue);
+            ColorTone_Refresh();
+            //TEST ENDE
 
-            ColorToneMap map = new ColorToneMap();
-
-            map.addColor(new Tone(Pitch.D4, Instrument.AcousticGrandPiano), Color.Black);
-            map.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
-            map.addColor(new Tone(Pitch.A4, Instrument.AcousticGuitarSteel), Color.Blue);
-
-            sequence = new Sequence(map, (int)numBPM.Value);
+            Tones_Refresh();
+            sequence = new Sequence(colorToneMap, (int)numBPM.Value);
 
             player = new SequencePlayer(output, sequence);
         }
@@ -111,7 +119,7 @@ namespace bubblegum_sequencer
                 this.videoSource = null;
             }
             Environment.Exit(0);//Alle Threads beenden
-        }
+         }
 
         public void update(IObserverable subject)
         {
@@ -125,6 +133,12 @@ namespace bubblegum_sequencer
             if (subject is Grid)
             {
                 grid = (Grid)subject;
+            }
+
+            if (subject is ColorList)
+            {
+                colorList = (ColorList)subject;
+                ColorTone_Refresh();
             }
         }
 
@@ -158,6 +172,138 @@ namespace bubblegum_sequencer
             txtColor.Text = "R:" + testcolor.R.ToString() + "| G:" + testcolor.G.ToString() + "| B:" + testcolor.B.ToString();
 
             btnGetColor.BackColor = testcolor;
+        }
+
+        //COLOR-TONE-MAP-CONTROLLER
+        private void ColorTone_Refresh()
+        {
+            int selectedItem = lstColorTone.SelectedIndex;
+            lstColorTone.Items.Clear();
+
+            for (int i = 0; i < colorToneMap.getSize(); i++)//Alle Farben die einen Ton haben
+            {
+                lstColorTone.Items.Add((i + 1).ToString() + ". | Farbe:" + colorList.getColornameByColor(colorToneMap.getColorByID(i)) + " | Ton:" + (colorToneMap.getToneAt(i)).getInstrumentName() + "(" + (colorToneMap.getToneAt(i)).getPitchName() + ")");
+            }
+
+            int number = colorToneMap.getSize() + 1;
+            for (int i = 0; i < colorList.getCount(); i++)//Alle Farben die keinen Ton haben
+            {
+                bool colorInList = false;
+                for (int j = 0; j < colorToneMap.getSize(); j++)
+                {
+                    if (colorList.getColor(i) == colorToneMap.getColorByID(j))
+                    {
+                        colorInList = true;
+                    }
+                }
+                if (!colorInList)
+                {
+                    lstColorTone.Items.Add(number.ToString() + ". | Farbe:" + colorList.getColorname(i));
+                    nonListedColors.Add(colorList.getColor(i));
+                    number++;
+                }
+            }
+
+            if (selectedItem < lstColorTone.Items.Count)//Wenn es die alte Auswahlposition noch gibt...
+            {
+                lstColorTone.SelectedIndex = selectedItem;//...auf alte Position, sonst...
+            }
+            else
+            {
+                lstColorTone.SelectedIndex = (lstColorTone.Items.Count - 1);//Auf die letzte Auswahlposition der Tabelle
+            }
+        }
+        private void Tones_Refresh()//Tonauswahl initiieren
+        {
+            cbxInstrument.Items.Add("(Instrument)");
+            for (int i = 0; i < Enum.GetNames(typeof(Instrument)).Length; i++)
+            {
+                cbxInstrument.Items.Add(Enum.GetNames(typeof(Instrument))[i]);
+            }
+            for (int i = 0; i < Enum.GetNames(typeof(Pitch)).Length; i++)
+            {
+                cbxPitch.Items.Add(Enum.GetNames(typeof(Pitch))[i]);
+            }
+            cbxInstrument.SelectedIndex = 0;
+            cbxPitch.SelectedIndex = -1;
+        }
+        private void lstColorTone_SelectedIndexChanged(object sender, EventArgs e)//Auswahländerung in der ColorTone-Liste
+        {
+            colorToneInChange = true;
+            if (lstColorTone.SelectedIndex < (colorToneMap.getSize()))
+            {
+                string instrument = colorToneMap.getToneAt(lstColorTone.SelectedIndex).getInstrumentName();
+                string pitch = colorToneMap.getToneAt(lstColorTone.SelectedIndex).getPitchName();
+                for (int i = 0; i < Enum.GetNames(typeof(Instrument)).Length; i++)
+                {
+                    if (Enum.GetNames(typeof(Instrument))[i] == instrument)
+                    {
+                        cbxInstrument.SelectedIndex = i + 1;
+                        break;
+                    }
+                }
+                for (int i = 0; i < Enum.GetNames(typeof(Pitch)).Length; i++)
+                {
+                    if (Enum.GetNames(typeof(Pitch))[i] == pitch)
+                    {
+                        cbxPitch.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                cbxInstrument.SelectedIndex = 0;
+                cbxPitch.SelectedIndex = -1;
+            }
+            colorToneInChange = false;
+        }        
+        private void cbxInstrument_SelectedIndexChanged(object sender, EventArgs e)//Auswahländerung in der Instrumentliste
+        {
+            if (cbxInstrument.SelectedIndex == 0)//Es gibt nur ein Pitch, wenn ein Instrument ausgewählt wurde
+            {
+                cbxPitch.SelectedIndex = -1;
+                cbxPitch.Enabled = false;
+            }
+            else
+            {
+                cbxPitch.Enabled = true;
+                if (cbxPitch.SelectedIndex == -1)//Wenn vorher kein Element ausgewählt war
+                {
+                    cbxPitch.SelectedIndex = 0;
+                }
+            }
+            if (!colorToneInChange)//Nicht ausführen, wenn gerade ein anderes Element in der ColorTone-Liste ausgewählt wird/wurde
+            {
+                newTone();
+            }
+        }
+        private void cbxPitch_SelectedIndexChanged(object sender, EventArgs e)//Auswahländerung in der Pitchliste
+        {
+            if (!colorToneInChange)//Nicht ausführen, wenn gerade ein anderes Element in der ColorTone-Liste ausgewählt wird/wurde
+            {
+                newTone();
+            }
+        }
+        private void newTone()//Wenn ein neuer Ton ausgewählt wurde
+        {
+            if (cbxInstrument.SelectedIndex != 0)
+            {
+                if (lstColorTone.SelectedIndex < colorToneMap.getSize() && lstColorTone.SelectedIndex != -1)
+                {
+                    colorToneMap.modifyToneByID(lstColorTone.SelectedIndex, new Tone((Pitch)(cbxPitch.SelectedIndex), (Instrument)(cbxInstrument.SelectedIndex - 1)));
+                }
+                else
+                {
+                    colorToneMap.addColor(new Tone((Pitch)(cbxPitch.SelectedIndex), (Instrument)(cbxInstrument.SelectedIndex - 1)), nonListedColors[lstColorTone.Items.Count - colorToneMap.getSize()]);
+                }
+            }
+            else
+            {
+                colorToneMap.deleteColorToneByID(lstColorTone.SelectedIndex);
+            }
+
+            ColorTone_Refresh();
         }
     }
 }
