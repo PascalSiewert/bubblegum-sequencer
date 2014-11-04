@@ -20,9 +20,11 @@ namespace bubblegum_sequencer
         ColorToneMap colorToneMap;
 
         private OutputDevice output;
+        private List<Midi.Message> toneMessages;
         private Sequence sequence;
         private SequencePlayer player;
         private List<Color> nonListedColors = new List<Color>();
+
 
         bool colorToneInChange = false;//Gibt an, ob gerade eine andere Kombination ausgewählt wird
 
@@ -32,6 +34,7 @@ namespace bubblegum_sequencer
             source = new VideoSource();
             grid = new Grid(1, 1);
             colorToneMap = new ColorToneMap();
+            toneMessages = new List<Midi.Message>();
             colorList = new ColorList();
             source.add(this);
             grid.add(this);
@@ -84,6 +87,18 @@ namespace bubblegum_sequencer
                 }
                 grid.setSize(picPicture.Size);
                 grid.calcIntersections();
+
+                // Schleife zum Erkennen der Farbe und Abspielen der jeweiligen Töne #Pascal
+                for (int i = 0; i < grid.Cols; i++)
+                {
+                    for (int j = 0; j < grid.Rows; j++)
+                    {
+                        sequence.addColorAt(grid.getColorAtIntersection(i, j, (Bitmap)picPicture.Image), i);
+                    }
+                }
+
+                // Sequence beim Player aktualisieren #Pascal
+                player.setSequence(sequence);
             }
         }//startet Stream
 
@@ -302,6 +317,8 @@ namespace bubblegum_sequencer
                 {
                     colorToneMap.addColor(new Tone((Pitch)(cbxPitch.SelectedIndex), (Instrument)(cbxInstrument.SelectedIndex - 1)), nonListedColors[(lstColorTone.Items.Count - colorToneMap.getSize()) - 1]);
                 }
+                // Sequence mit der neuen ColorToneMap aktualisieren
+                sequence.setColorToneMap(colorToneMap);
             }
             else
             {

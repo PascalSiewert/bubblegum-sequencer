@@ -113,7 +113,7 @@
             this.numBPM.Size = new System.Drawing.Size(46, 20);
             this.numBPM.TabIndex = 7;
             this.numBPM.Value = new decimal(new int[] {
-            50,
+            100,
             0,
             0,
             0});
