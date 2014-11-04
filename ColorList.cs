@@ -123,6 +123,8 @@ namespace bubblegum_sequencer
                 }
             }
 
+            notify();
+
             return success;
         }
 
@@ -133,9 +135,12 @@ namespace bubblegum_sequencer
             try
             {
                 colors.RemoveAt(id);
+                colornames.RemoveAt(id);
                 success = true;
             }
             catch { }
+
+            notify();
 
             return success;
         }

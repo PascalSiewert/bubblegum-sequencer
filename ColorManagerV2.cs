@@ -68,6 +68,29 @@ namespace bubblegum_sequencer
             colorinsert.Show();
         }
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (lstColors.SelectedIndex >= 0)//Wenn eine Farbe ausgewählt ist...
+            {
+                int oldSelected = lstColors.SelectedIndex;
+                if (colorlist.deleteColorById(lstColors.SelectedIndex))//...diese löschen und die nachgeordnete Farbe auswählen, falls vorhanden
+                {
+                    if (oldSelected > lstColors.Items.Count - 1)//Wenn es kein nachgeordnete gibt...
+                    {
+                        lstColors.SelectedIndex = (lstColors.Items.Count - 1);//...letzte aus der Liste auswählen, sonst...
+                    }
+                    else
+                    {
+                        lstColors.SelectedIndex = oldSelected;//nachgeordnete Farbe auswählen
+                    }
+                }
+            }
+            else//Wenn keine Farbe ausgewählt ist...
+            {
+                MessageBox.Show(this, "Bitte wählen Sie erst eine zu löschende Farbe aus.", "Keine Farbe ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Error);//...Fehlermeldung
+            }
+        }   
+
         private void txtColorname_KeyDown(object sender, KeyEventArgs e)//Ändert Farbname
         {
             if (e.KeyCode == Keys.Return)//Wenn Return gedrückt wurde
@@ -75,6 +98,7 @@ namespace bubblegum_sequencer
                 if (lstColors.SelectedIndex >= 0)//Wenn eine Farbe ausgewählt ist
                 {
                     bool success;//Gibt an, ob Änderung wirksam ist
+                    int oldSelected = lstColors.SelectedIndex;//Speichert die Farbauswahl
 
                     success = colorlist.changeColorname(lstColors.SelectedIndex, txtColorname.Text);//Versucht Farbname zu ändern
 
@@ -82,6 +106,8 @@ namespace bubblegum_sequencer
                     {
                         MessageBox.Show(this, "Stellen Sie sicher, dass der Farbname nicht bereits verwendet wurde.", "Farbänderung fehlgeschlagen", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
+                    lstColors.SelectedIndex = oldSelected;//Setzt wieder auf die alte Farbauswahl
                 }
             }
         }       
@@ -89,6 +115,6 @@ namespace bubblegum_sequencer
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
-        }       
+        }           
     }
 }

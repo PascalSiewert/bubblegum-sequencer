@@ -40,9 +40,11 @@ namespace bubblegum_sequencer
             output = OutputDevice.InstalledDevices[0];
       
             //TEST BEGINN
+            /*
             colorToneMap.addColor(new Tone(Pitch.D4, Instrument.AcousticGrandPiano), Color.Black);
             colorToneMap.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
             colorToneMap.addColor(new Tone(Pitch.A4, Instrument.AcousticGuitarSteel), Color.Blue);
+             */
             ColorTone_Refresh();
             //TEST ENDE
 
@@ -177,8 +179,10 @@ namespace bubblegum_sequencer
         //COLOR-TONE-MAP-CONTROLLER
         private void ColorTone_Refresh()
         {
-            int selectedItem = lstColorTone.SelectedIndex;
-            lstColorTone.Items.Clear();
+            int selectedItem = lstColorTone.SelectedIndex;//Alte Listenauswahl
+            lstColorTone.Items.Clear();//Löscht alle Einträge in der ColorTone-Liste
+            nonListedColors.RemoveRange(0, nonListedColors.Count);//Löscht alle Einträge in der Liste aller nicht verwendeten Farben
+
 
             for (int i = 0; i < colorToneMap.getSize(); i++)//Alle Farben die einen Ton haben
             {
@@ -268,6 +272,7 @@ namespace bubblegum_sequencer
             else
             {
                 cbxPitch.Enabled = true;
+                
                 if (cbxPitch.SelectedIndex == -1)//Wenn vorher kein Element ausgewählt war
                 {
                     cbxPitch.SelectedIndex = 0;
@@ -280,7 +285,7 @@ namespace bubblegum_sequencer
         }
         private void cbxPitch_SelectedIndexChanged(object sender, EventArgs e)//Auswahländerung in der Pitchliste
         {
-            if (!colorToneInChange)//Nicht ausführen, wenn gerade ein anderes Element in der ColorTone-Liste ausgewählt wird/wurde
+            if (!colorToneInChange && lstColorTone.SelectedIndex < colorToneMap.getSize())//Nicht ausführen, wenn gerade ein anderes Element in der ColorTone-Liste ausgewählt wird/wurde
             {
                 newTone();
             }
@@ -295,7 +300,7 @@ namespace bubblegum_sequencer
                 }
                 else
                 {
-                    colorToneMap.addColor(new Tone((Pitch)(cbxPitch.SelectedIndex), (Instrument)(cbxInstrument.SelectedIndex - 1)), nonListedColors[lstColorTone.Items.Count - colorToneMap.getSize()]);
+                    colorToneMap.addColor(new Tone((Pitch)(cbxPitch.SelectedIndex), (Instrument)(cbxInstrument.SelectedIndex - 1)), nonListedColors[(lstColorTone.Items.Count - colorToneMap.getSize()) - 1]);
                 }
             }
             else
