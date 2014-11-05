@@ -41,8 +41,11 @@ namespace bubblegum_sequencer
                 clock.Start();
                 Thread.Sleep((int)((16.0 / clock.BeatsPerMinute * 15000.0) / 4.0 * beats));
                 output.SilenceAllNotes();
-                clock.Stop();
-                clock.Reset();
+                if (clock.IsRunning)
+                {
+                    clock.Stop();
+                    clock.Reset();
+                }               
             }
 
             if (output.IsOpen)
@@ -55,6 +58,13 @@ namespace bubblegum_sequencer
         {
             beats = 0;
             toneMessages.Clear();
+            
+            if (clock.IsRunning)
+            {
+                clock.Stop();
+                clock.Reset();
+            }
+            
             for (int i = 0; i < seq.getColSize(); i++)
             {
                 for (int j = 0; j < seq.getRowSize(i); j++)
@@ -79,7 +89,7 @@ namespace bubblegum_sequencer
                     toneMessages.Add(new NoteOffMessage(output, Channel.Channel1, curTone.getPitch(), 80, i + 1));
                 }
                 beats++;
-            }
+            }           
         }
 
         public void startPlayer()

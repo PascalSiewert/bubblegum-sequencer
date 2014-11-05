@@ -86,19 +86,7 @@ namespace bubblegum_sequencer
                     connection = true;
                 }
                 grid.setSize(picPicture.Size);
-                grid.calcIntersections();
-
-                // Schleife zum Erkennen der Farbe und Abspielen der jeweiligen Töne #Pascal
-                for (int i = 0; i < grid.Cols; i++)
-                {
-                    for (int j = 0; j < grid.Rows; j++)
-                    {
-                        sequence.addColorAt(grid.getColorAtIntersection(i, j, (Bitmap)picPicture.Image), i);
-                    }
-                }
-
-                // Sequence beim Player aktualisieren #Pascal
-                player.setSequence(sequence);
+                grid.calcIntersections();                
             }
         }//startet Stream
 
@@ -106,7 +94,6 @@ namespace bubblegum_sequencer
         void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             source.Picture = (Bitmap)eventArgs.Frame.Clone();
-
             //HIER: Bildanalyse            
         }
 
@@ -141,11 +128,20 @@ namespace bubblegum_sequencer
         public void update(IObserverable subject)
         {
             //HIER: Bildanalyse   
-            try
+
+            if (subject is VideoSource)
             {
                 picPicture.Image = ((VideoSource)subject).Picture;
+                if (picPicture.Image != null)
+                {
+                    // Funktion zum einspeichern der abzuspielenden Töne #Pascal
+                    sequence.addColors(grid, (Bitmap)picPicture.Image);
+
+                    // Sequence beim Player aktualisieren #Pascal
+                    player.setSequence(sequence);
+                }
             }
-            catch { }
+
 
             if (subject is Grid)
             {

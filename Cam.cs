@@ -192,7 +192,9 @@ namespace bubblegum_sequencer
 
         public void update(IObserverable subject)
         {
+
             picPicture.Image = ((VideoSource)subject).Picture;
+
 
             //HIER: Bildanalyse
         }

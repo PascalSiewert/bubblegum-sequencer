@@ -125,8 +125,16 @@ namespace bubblegum_sequencer
 
         public Color getColorAtIntersection(int colIndex, int rowIndex, Bitmap picture)//Gibt die Farbe an den Koordinaten eines Schnittpunkten auf dem Bild zurück
         {
-            Point intersection = getIntersectionAt(colIndex, rowIndex);
-            return picture.GetPixel(intersection.X, intersection.Y);
+            Color detectedColor = new Color();
+
+            try
+            {
+                Point intersection = getIntersectionAt(colIndex, rowIndex);
+                detectedColor = picture.GetPixel(intersection.X, intersection.Y);
+            }
+            catch { };
+
+            return detectedColor;
         }
 
         public void setSize(Size aSize)//Setzt Bildgröße

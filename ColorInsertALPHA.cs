@@ -28,6 +28,7 @@ namespace bubblegum_sequencer
 
                 source = (VideoSource)subject;
 
+
                 if (picWidth != source.Picture.Width)//Wenn sich Bildgröße geändert hat
                 {
                     double aspectRatio;
@@ -43,6 +44,7 @@ namespace bubblegum_sequencer
                     }
                     picWidth = source.Picture.Width;
                 }
+
 
                 picPicture.Image = source.Picture;
             }

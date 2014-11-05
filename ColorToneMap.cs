@@ -81,11 +81,18 @@ namespace bubblegum_sequencer
 
             for (int i = 0; i < colors.Count; i++)
             {
-                if (colors[i].Equals(by))
+                if (by.R > (colors[i].R - 10) && by.R < (colors[i].R + 10))//Wenn Rotanteil in etwa gleich
                 {
-                    index = i;
-                    foundColor = true;
-                }
+                    if (by.G > (colors[i].G - 10) && by.G < (colors[i].G + 10))//Wenn Grünanteil in etwa gleich
+                    {
+                        if (by.B > (colors[i].B - 10) && by.B < (colors[i].B + 10))//Wenn Blauanteil in etwa gleich
+                        {
+                            index = i;
+                            foundColor = true;
+                            break;
+                        }
+                    }
+                }                                    
             }
 
             if (foundColor)

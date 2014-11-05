@@ -29,7 +29,7 @@ namespace bubblegum_sequencer
             return tone;
         }
 
-        public void addColorAt(Color c, int col)
+        public void addColorAt(Color c, int col)//Fügt eine Farbe hinzu
         {
             while (col >= colors.Count)
             {
@@ -37,6 +37,18 @@ namespace bubblegum_sequencer
             }
 
             colors[col].Add(c);
+        }
+
+        public void addColors(Grid grid, Bitmap picture)//Fügt alle Farben hinzu
+        {
+            colors.Clear();
+            for (int i = 0; i < grid.Cols; i++)
+            {
+                for (int j = 0; j < grid.Rows; j++)
+                {
+                    addColorAt(grid.getColorAtIntersection(i, j, picture), i);
+                }
+            }
         }
 
         public Tone getToneAt(int index)
