@@ -22,12 +22,32 @@ namespace bubblegum_sequencer
         {
             oDevice.SendProgramChange(Channel.Channel1, instrument);
             oDevice.SendNoteOn(Channel.Channel1, pitch, 80);
-            
         }
 
         public void stopSlowly(OutputDevice oDevice)
         {
             oDevice.SendNoteOff(Channel.Channel1, pitch, 80);
+        }
+
+        public Pitch getPitch()
+        {
+            return pitch;
+        }
+
+        public Instrument getInstrument()
+        {
+            return instrument;
+        }
+
+        public String getToneName()
+        {
+            return pitch.ToString();
+        }
+
+        public String getInstrumentName()
+        {
+            return instrument.ToString();
+            
         }
     }
 }

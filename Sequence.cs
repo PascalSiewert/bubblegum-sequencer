@@ -13,19 +13,30 @@ namespace bubblegum_sequencer
 
         private int bpm;
 
-        private Color[] colors = { Color.Black, Color.Black, Color.Black, Color.Black };
+        private List<List<Color>> colors;
 
         public Sequence(ColorToneMap aMap, int aBPM)
         {
             ctMap = aMap;
             bpm = aBPM;
+            colors = new List<List<Color>>();
         }
 
-        public Tone getToneByColorIndex(int index)
+        public Tone getToneByColorIndex(int col, int row)
         {
-            Tone tone = ctMap.getToneByColor(colors[index]);
+            Tone tone = ctMap.getToneByColor(colors[col][row]);
 
             return tone;
+        }
+
+        public void addColorAt(Color c, int col)
+        {
+            while (col >= colors.Count)
+            {
+                colors.Add(new List<Color>());
+            }
+
+            colors[col].Add(c);            
         }
 
         public Tone getToneAt(int index)
@@ -34,9 +45,14 @@ namespace bubblegum_sequencer
             return tone;
         }
 
-        public int getSize()
+        public int getColSize()
         {
-            return colors.Length;
+            return colors.Count;
+        }
+
+        public int getRowSize(int col)
+        {
+            return colors[col].Count;
         }
 
         public int getBPM()

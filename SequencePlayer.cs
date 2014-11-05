@@ -13,50 +13,73 @@ namespace bubblegum_sequencer
         private Sequence seq;
         private Thread playerThread;
         private bool isPlaying;
+        private Tone prevTone;
+        private Clock clock;
 
         public SequencePlayer(OutputDevice aDevice, Sequence aSequence)
         {
             output = aDevice;
             seq = aSequence;
             playerThread = new Thread(play);
+            clock = new Clock(seq.getBPM());
         }
 
         private void play()
         {
+            List<Message> toneMessages = new List<Message>();
+            int beats = 0;
             isPlaying = true;
-            double seconds = 0;
 
-            while (isPlaying)
+            if (!output.IsOpen)
             {
-                if (!output.IsOpen)
-                {
-                    output.Open();
-                }
+                output.Open();
+            }
 
-                for (int i = 0; i < seq.getSize(); i++)
+            toneMessages.Clear();
+            for (int i = 0; i < seq.getColSize(); i++)
+            {
+                for (int j = 0; j < seq.getRowSize(i); j++)
                 {
-                    seq.getToneByColorIndex(i).play(output);
-                       
-                    try
+                    Tone curTone = seq.getToneByColorIndex(i, j);
+                    PercussionTone pTone = null;
+
+                    if (curTone == null)
                     {
-                        seconds = 16 / (double) seq.getBPM() * 15 / 4;
-                        Thread.Sleep((int)(seconds * 1000));
+                        continue;
                     }
-                    catch (ThreadInterruptedException)
-                    {
-                        isPlaying = false;
-                        break;
-                    }                   
-                    
-                    seq.getToneByColorIndex(i).stopSlowly(output);
-                }                
-            }
 
-            if (output.IsOpen)
-            {
-                output.Close();
+                    if (curTone is PercussionTone)
+                    {
+                        pTone = (PercussionTone)curTone;
+                        toneMessages.Add(new PercussionMessage(output, pTone.getPercussionInstrument(), 80, i));
+                        continue;
+                    }
+
+                    toneMessages.Add(new ProgramChangeMessage(output, Channel.Channel1, curTone.getInstrument(), i));
+                    toneMessages.Add(new NoteOnMessage(output, Channel.Channel1, curTone.getPitch(), 80, i));
+                    toneMessages.Add(new NoteOffMessage(output, Channel.Channel1, curTone.getPitch(), 80, i + 1));
+                }
+                beats++;
+            }               
+
+                while (isPlaying)
+                {
+
+                    
+                    clock.BeatsPerMinute = seq.getBPM();
+                    clock.Schedule(toneMessages, 0);
+                    clock.Start();
+                    Thread.Sleep((int)((16.0 / clock.BeatsPerMinute * 15000.0) / 4.0 * beats));
+                    output.SilenceAllNotes();
+                    clock.Stop();
+                    clock.Reset();
+                }                
+
+                if (output.IsOpen)
+                {
+                    output.Close();
+                }
             }
-        }
 
         public void startPlayer()
         {

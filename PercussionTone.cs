@@ -19,5 +19,10 @@ namespace bubblegum_sequencer
         {
             oDevice.SendPercussion(percussion, 80);
         }
+
+        public Percussion getPercussionInstrument()
+        {
+            return percussion;
+        }      
     }
 }
