@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cam));
             this.lbl_header = new System.Windows.Forms.Label();
             this.lblCam = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -235,6 +236,8 @@
             // 
             // vspStream
             // 
+            this.vspStream.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("vspStream.BackgroundImage")));
+            this.vspStream.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.vspStream.Location = new System.Drawing.Point(278, 54);
             this.vspStream.Name = "vspStream";
             this.vspStream.Size = new System.Drawing.Size(410, 230);

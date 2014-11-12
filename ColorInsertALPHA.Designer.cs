@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorInsertALPHA));
             this.gbxMeasure = new System.Windows.Forms.GroupBox();
             this.pnlMeasureColor = new System.Windows.Forms.Panel();
             this.txtMeasureGreen = new System.Windows.Forms.TextBox();
@@ -262,6 +263,8 @@
             // 
             // vspStream
             // 
+            this.vspStream.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("vspStream.BackgroundImage")));
+            this.vspStream.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.vspStream.Location = new System.Drawing.Point(12, 12);
             this.vspStream.Name = "vspStream";
             this.vspStream.Size = new System.Drawing.Size(516, 290);
