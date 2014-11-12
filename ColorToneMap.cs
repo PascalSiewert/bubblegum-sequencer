@@ -6,6 +6,7 @@ using System.Drawing;
 
 namespace bubblegum_sequencer
 {
+    /// Klasse für die Zuordnung von Ton -> Farbe #Pascal
     class ColorToneMap
     {
         private List<Tone> tones;
@@ -58,6 +59,11 @@ namespace bubblegum_sequencer
             return success;
         }
 
+        /// <summary>
+        ///  Löscht eine Ton-Farb-Zuordnung in der Map
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Gibt zurueck, ob die Zuordnung erfolgreich geloescht wurde</returns>
         public bool deleteColorToneByID(int id)
         {
             bool success = false;

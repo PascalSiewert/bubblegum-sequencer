@@ -190,6 +190,7 @@
             this.chkGrid.TabIndex = 1;
             this.chkGrid.Text = "Gitter";
             this.chkGrid.UseVisualStyleBackColor = true;
+            this.chkGrid.CheckedChanged += new System.EventHandler(this.chkGrid_CheckedChanged);
             // 
             // lstColorTone
             // 

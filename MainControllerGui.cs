@@ -328,6 +328,13 @@ namespace bubblegum_sequencer
             }
 
             ColorTone_Refresh();
+        }
+
+        private void chkGrid_CheckedChanged(object sender, EventArgs e)
+        {
+            // Grid neuzeichnen, wenn Checkbox geklickt #Pascal
+            vspStream.Invalidate();
+            vspStream.Update();
         }       
     }
 }
