@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorInsertALPHA));
-            this.picPicture = new System.Windows.Forms.PictureBox();
             this.gbxMeasure = new System.Windows.Forms.GroupBox();
             this.pnlMeasureColor = new System.Windows.Forms.Panel();
             this.txtMeasureGreen = new System.Windows.Forms.TextBox();
@@ -51,21 +49,10 @@
             this.lblRed = new System.Windows.Forms.Label();
             this.btnInsertColor = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
+            this.vspStream = new AForge.Controls.VideoSourcePlayer();
             this.gbxMeasure.SuspendLayout();
             this.gbxColor.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // picPicture
-            // 
-            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
-            this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPicture.Location = new System.Drawing.Point(12, 12);
-            this.picPicture.Name = "picPicture";
-            this.picPicture.Size = new System.Drawing.Size(516, 290);
-            this.picPicture.TabIndex = 1;
-            this.picPicture.TabStop = false;
-            this.picPicture.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.picPicture_MouseDoubleClick);
             // 
             // gbxMeasure
             // 
@@ -273,21 +260,31 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
             // 
+            // vspStream
+            // 
+            this.vspStream.Location = new System.Drawing.Point(12, 12);
+            this.vspStream.Name = "vspStream";
+            this.vspStream.Size = new System.Drawing.Size(516, 290);
+            this.vspStream.TabIndex = 10;
+            this.vspStream.Text = "Stream";
+            this.vspStream.VideoSource = null;
+            this.vspStream.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.vspStream_MouseDoubleClick);
+            // 
             // ColorInsertALPHA
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 315);
+            this.Controls.Add(this.vspStream);
             this.Controls.Add(this.btnAbort);
             this.Controls.Add(this.btnInsertColor);
             this.Controls.Add(this.gbxColor);
             this.Controls.Add(this.btnGetMeasure);
             this.Controls.Add(this.gbxMeasure);
-            this.Controls.Add(this.picPicture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ColorInsertALPHA";
             this.Text = "ColorInsertALPHA";
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ColorInsertALPHA_FormClosing);
             this.gbxMeasure.ResumeLayout(false);
             this.gbxMeasure.PerformLayout();
             this.gbxColor.ResumeLayout(false);
@@ -298,7 +295,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox picPicture;
         private System.Windows.Forms.GroupBox gbxMeasure;
         private System.Windows.Forms.Panel pnlMeasureColor;
         private System.Windows.Forms.TextBox txtMeasureGreen;
@@ -320,5 +316,6 @@
         private System.Windows.Forms.Button btnAbort;
         private System.Windows.Forms.Label lblColorname;
         private System.Windows.Forms.TextBox txtColorname;
+        private AForge.Controls.VideoSourcePlayer vspStream;
     }
 }

@@ -12,6 +12,7 @@ namespace bubblegum_sequencer
     public partial class ColorInsertALPHA : Form, IObserver
     {
         ColorList colorlist;
+        VideoSource source;
         int picWidth = 0;//aktuelle original Bildbreite
 
         public ColorInsertALPHA()
@@ -23,30 +24,34 @@ namespace bubblegum_sequencer
         public void update(IObserverable subject)
         {
             if (subject is VideoSource)
-            {
-                VideoSource source;
-
+            {              
                 source = (VideoSource)subject;
 
+                if (vspStream.IsRunning)//Stream beenden
+                {
+                    vspStream.SignalToStop();
+                    vspStream.WaitForStop();
+                }
 
-                if (picWidth != source.Picture.Width)//Wenn sich Bildgröße geändert hat
+                if (picWidth != source.Source.VideoResolution.FrameSize.Width)//Wenn sich Bildgröße geändert hat
                 {
                     double aspectRatio;
-                    if ((Convert.ToDouble(source.Picture.Width) / Convert.ToDouble(source.Picture.Height) * picPicture.Height) < picPicture.Width)
+                    if ((Convert.ToDouble(source.Source.VideoResolution.FrameSize.Width) / Convert.ToDouble(source.Source.VideoResolution.FrameSize.Height) * vspStream.Height) < vspStream.Width)
                     {
-                        aspectRatio = Convert.ToDouble(source.Picture.Width) / Convert.ToDouble(source.Picture.Height);//Berechnung mit Double um Nachkommastellen zu beachten
-                        picPicture.Width = Convert.ToInt32(aspectRatio * picPicture.Height);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                        aspectRatio = Convert.ToDouble(source.Source.VideoResolution.FrameSize.Width) / Convert.ToDouble(source.Source.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Width = Convert.ToInt32(aspectRatio * vspStream.Height);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                     }
                     else
                     {
-                        aspectRatio = Convert.ToDouble(source.Picture.Height) / Convert.ToDouble(source.Picture.Width);//Berechnung mit Double um Nachkommastellen zu beachten
-                        picPicture.Height = Convert.ToInt32(aspectRatio * picPicture.Width);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                        aspectRatio = Convert.ToDouble(source.Source.VideoResolution.FrameSize.Height) / Convert.ToDouble(source.Source.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Height = Convert.ToInt32(aspectRatio * vspStream.Width);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                     }
-                    picWidth = source.Picture.Width;
+                    picWidth = source.Source.VideoResolution.FrameSize.Width;
                 }
 
-
-                picPicture.Image = source.Picture;
+                //Stream starten
+                vspStream.VideoSource = source.Source;
+                vspStream.Start();
             }
             else if (subject is ColorList)
             {
@@ -55,11 +60,12 @@ namespace bubblegum_sequencer
         }
 
         //Farbe ermitteln
-        private void picPicture_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void vspStream_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Point measurePoint = e.Location;//getBitmapPoint(e.Location);
-            Bitmap measurePicture = (Bitmap)picPicture.Image;
-            Color color = measurePicture.GetPixel(measurePoint.X, measurePoint.Y);
+            Bitmap measurePicture = (Bitmap)vspStream.GetCurrentVideoFrame();
+            Point BitmapPoint = getBitmapPoint(measurePoint, measurePicture);//Berrechnet die Mausposition in Bezug auf die eigentliche Größe der Bitmap
+            Color color = measurePicture.GetPixel(BitmapPoint.X, BitmapPoint.Y);
 
             //gemessene Farbe in Textboxen eintragen
             txtMeasureRed.Text = color.R.ToString();
@@ -69,17 +75,18 @@ namespace bubblegum_sequencer
             //gemessene Farbe in Panel anzeigen
             pnlMeasureColor.BackColor = color;
         }
-        private Point getBitmapPoint(Point picPoint)
+        
+        private Point getBitmapPoint(Point picPoint, Bitmap picture)
         {
-            Point bitPoint = new Point();
-            Bitmap picture = (Bitmap)picPicture.BackgroundImage;
+            Point bitPoint = new Point();            
 
             //X- und Y-Koordinaten umrechenen
-            bitPoint.X = Convert.ToInt32((Convert.ToDouble(picture.Width) / Convert.ToDouble(picPicture.Width)) * picPoint.X);
-            bitPoint.Y = Convert.ToInt32((Convert.ToDouble(picture.Height) / Convert.ToDouble(picPicture.Height)) * picPoint.Y);
+            bitPoint.X = Convert.ToInt32((Convert.ToDouble(picture.Width) / Convert.ToDouble(vspStream.Width)) * picPoint.X);
+            bitPoint.Y = Convert.ToInt32((Convert.ToDouble(picture.Height) / Convert.ToDouble(vspStream.Height)) * picPoint.Y);
 
             return bitPoint;
         }//Mausposition auf picPicture in Mausposition auf Bitmap umrechnen
+        
 
         //Messung in Farbe kopieren
         private void btnGetMeasure_Click(object sender, EventArgs e)
@@ -92,7 +99,7 @@ namespace bubblegum_sequencer
         //Farbpanel aktualisieren und Werte überprüfen
         private void pnlColor_Refresh()//aktuelle Farbe in Panel anzeigen  
         {
-            pnlColor.BackColor = Color.FromArgb(Convert.ToInt32(txtRed.Text), Convert.ToInt32(txtGreen.Text), Convert.ToInt32(txtBlue.Text));       
+            pnlColor.BackColor = Color.FromArgb(Convert.ToInt32(txtRed.Text), Convert.ToInt32(txtGreen.Text), Convert.ToInt32(txtBlue.Text));
         }
         private void txtRed_TextChanged(object sender, EventArgs e)
         {
@@ -186,7 +193,12 @@ namespace bubblegum_sequencer
         //Form schließen(keine neue Farbe)
         private void btnAbort_Click(object sender, EventArgs e)
         {
-            this.Close();
-        }     
+            this.Close();          
+        }
+
+        private void ColorInsertALPHA_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            source.delete(this);//Als Beobachter austragen
+        }
     }
 }

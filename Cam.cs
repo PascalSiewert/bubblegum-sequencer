@@ -8,6 +8,9 @@ using System.Text;
 using System.Windows.Forms;
 using AForge.Video;
 using AForge.Video.DirectShow;
+using AForge;
+using AForge.Controls;
+using AForge.Imaging;
 
 namespace bubblegum_sequencer
 {
@@ -19,8 +22,11 @@ namespace bubblegum_sequencer
         string oldMonkierString;
         VideoSource source;
         public Grid grid;
+        FilterInfoCollection videosources;//Kameraliste
+        Bitmap picture;//Aktuelles Bild/aktueller Frame
+        bool firstConnection = true;//Gibt an, ob es sich um die erste Verbindung mit einer Kamera handelt(Cam_Load)
 
-        public Cam(MainControllerGui form,  VideoCaptureDevice aVideoSource, VideoSource aSource, Grid aGrid)
+        public Cam(MainControllerGui form, VideoSource aSource, Grid aGrid)
         {
             InitializeComponent();
 
@@ -33,28 +39,24 @@ namespace bubblegum_sequencer
                 videoSource.VideoResolution = aVideoSource.VideoResolution;
             }
              */
-            videoSource = aVideoSource;
-
             source = aSource;//Übergabe des Obeserverable, um von Cam aus Bilder zu verteilen
 
+            videoSource = source.Source;
+           
             grid = aGrid;
         }
-
-        FilterInfoCollection videosources;//Kameraliste
-        Bitmap picture;//Aktuelles Bild/aktueller Frame
-        bool firstConnection = true;//Gibt an, ob es sich um die erste Verbindung mit einer Kamera handelt(Cam_Load)
-
+        
         //EVENTS
         private void Cam_Load(object sender, EventArgs e)
         {
             videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
 
-            foreach (FilterInfo source in videosources)//Lädt alle verügbaren Kameras in cbxCam
+            foreach (FilterInfo vsource in videosources)//Lädt alle verügbaren Kameras in cbxCam
             {
-                cbxCam.Items.Add(source.Name);
+                cbxCam.Items.Add(vsource.Name);
             }
 
-            if (videoSource.Source != null)//Falls bereits eine Kamera ausgewählt wurde, wird diese hier geladen
+            if (videoSource != null)//Falls bereits eine Kamera ausgewählt wurde, wird diese hier geladen
             {
                 firstConnection = false;
                 for (int i = 0; i < videosources.Count; i++)//Sucht die bereits gewählte Kamera in den Sources und wählt diese in cbxCam aus
@@ -63,8 +65,6 @@ namespace bubblegum_sequencer
                     if (videoSource.Source == tempVideoSource.Source)
                     {
                         cbxCam.SelectedIndex = i;
-                        oldMonkierString = videosources[i].MonikerString;//Speichert Monkierstring von übergebener Source
-                        oldResolution = videoSource.VideoResolution;//Speichert Resolution von übergebener Source
                     }
                     tempVideoSource.SignalToStop();
                     tempVideoSource = null;
@@ -73,27 +73,23 @@ namespace bubblegum_sequencer
         }
 
         //FUNCTIONS
-        void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        /*
+        void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)//VERALTET
         {
+            
             picture = (Bitmap)eventArgs.Frame.Clone();
 
-            source.Picture = picture;            
+            source.Picture = picture;      
+             
         }
+         * */
 
         //GUI
         private void btnAbort_Click(object sender, EventArgs e)
         {
-            //Änderungen wieder zurück setzen 
-            if (firstConnection)//Wenn es die erste Verbindung mit einer Kamera ist, dann wird bei Abbruch videoSource gelöscht
-            {
-                videoSource.SignalToStop();
-                videoSource = null;
-            }
-            else
-            {
-                videoSource = new VideoCaptureDevice(oldMonkierString);
-                videoSource.VideoResolution = oldResolution;
-            }
+            //Beendet Player
+            vspStream.SignalToStop();
+            vspStream.WaitForStop();
 
             this.Close();
         }
@@ -140,6 +136,12 @@ namespace bubblegum_sequencer
             string selectedItem = cbxResolution.SelectedItem.ToString();
             double aspectRatio;
 
+            if (vspStream.IsRunning)//Beende altes Signal, bevor du ein neues ausführst
+            {
+                vspStream.SignalToStop();
+                vspStream.WaitForStop();
+            }
+
             if (selectedItem != "keine Auflösungen verfügbar!")//Auflösung festlegen
             {
                 videoSource.VideoResolution = videoSource.VideoCapabilities[cbxResolution.SelectedIndex];//Ausgewählte Auflösung übernehmen
@@ -147,21 +149,25 @@ namespace bubblegum_sequencer
                 if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 230) < 410)
                 {
                     aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
-                    picPicture.Width = Convert.ToInt32(aspectRatio * 230);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    vspStream.Width = Convert.ToInt32(aspectRatio * 230);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                 }
                 else
                 {
                     aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
-                    picPicture.Height = Convert.ToInt32(aspectRatio * 410);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    vspStream.Height = Convert.ToInt32(aspectRatio * 410);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
                 }
             }
 
             //Video starten
             //if (!connection)
-            {
-                videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);
-                videoSource.Start();
-            }
+            
+                //videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);
+                vspStream.VideoSource = videoSource;
+                //videoSource.Start();
+                vspStream.Start();
+
+                //videoSource.Start();
+            
         }
 
         private void Cam_FormClosed(object sender, FormClosedEventArgs e)
@@ -179,7 +185,7 @@ namespace bubblegum_sequencer
         {
             if (cbxCam.SelectedItem.ToString() != "")//Nur wenn eine Kamera ausgewählt wurde
             {
-                mainController.stream_start(videoSource);
+                source.Source = videoSource;
 
                 this.Close();
             }
@@ -192,8 +198,7 @@ namespace bubblegum_sequencer
 
         public void update(IObserverable subject)
         {
-
-            picPicture.Image = ((VideoSource)subject).Picture;
+            //picPicture.Image = ((VideoSource)subject).Picture;
 
 
             //HIER: Bildanalyse

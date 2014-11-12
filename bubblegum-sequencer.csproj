@@ -37,6 +37,15 @@
     <ApplicationIcon>LogoNormal.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AForge">
+      <HintPath>extLibs\AForge\AForge.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Controls">
+      <HintPath>extLibs\AForge\AForge.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.Imaging">
+      <HintPath>extLibs\AForge\AForge.Imaging.dll</HintPath>
+    </Reference>
     <Reference Include="AForge.Video">
       <HintPath>extLibs\AForge\AForge.Video.dll</HintPath>
     </Reference>
@@ -74,12 +83,6 @@
     </Compile>
     <Compile Include="ColorList.cs" />
     <Compile Include="ColorToneMap.cs" />
-    <Compile Include="ColorInsert.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ColorInsert.Designer.cs">
-      <DependentUpon>ColorInsert.cs</DependentUpon>
-    </Compile>
     <Compile Include="ColorManagerV2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,9 +114,6 @@
     <Compile Include="VideoSource.cs" />
     <EmbeddedResource Include="Cam.resx">
       <DependentUpon>Cam.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ColorInsert.resx">
-      <DependentUpon>ColorInsert.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorInsertALPHA.resx">
       <DependentUpon>ColorInsertALPHA.cs</DependentUpon>

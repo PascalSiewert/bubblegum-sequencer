@@ -10,21 +10,21 @@ namespace bubblegum_sequencer
 {
     public class VideoSource : IObserverable 
     {
-        private Bitmap picture;
+        private VideoCaptureDevice source;
         public VideoSource()
         {
             
-        }
+        }       
 
-        public Bitmap Picture 
+        public VideoCaptureDevice Source
         {
             get
             {
-                return picture;
+                return source;
             }
             set
             {
-                picture = value;
+                source = value;
                 notify();
             }
         }

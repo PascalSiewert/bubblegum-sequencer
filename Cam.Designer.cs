@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Cam));
             this.lbl_header = new System.Windows.Forms.Label();
             this.lblCam = new System.Windows.Forms.Label();
             this.shapeContainer1 = new Microsoft.VisualBasic.PowerPacks.ShapeContainer();
@@ -48,9 +47,8 @@
             this.lblCornerColor = new System.Windows.Forms.Label();
             this.btnResume = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
-            this.picPicture = new System.Windows.Forms.PictureBox();
+            this.vspStream = new AForge.Controls.VideoSourcePlayer();
             this.gpxJustification.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl_header
@@ -79,7 +77,7 @@
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.lnsSeperator});
-            this.shapeContainer1.Size = new System.Drawing.Size(699, 292);
+            this.shapeContainer1.Size = new System.Drawing.Size(697, 292);
             this.shapeContainer1.TabIndex = 2;
             this.shapeContainer1.TabStop = false;
             // 
@@ -235,24 +233,20 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
             // 
-            // picPicture
+            // vspStream
             // 
-            this.picPicture.BackColor = System.Drawing.Color.DarkGray;
-            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
-            this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picPicture.Location = new System.Drawing.Point(278, 54);
-            this.picPicture.Name = "picPicture";
-            this.picPicture.Size = new System.Drawing.Size(410, 230);
-            this.picPicture.TabIndex = 11;
-            this.picPicture.TabStop = false;
+            this.vspStream.Location = new System.Drawing.Point(278, 54);
+            this.vspStream.Name = "vspStream";
+            this.vspStream.Size = new System.Drawing.Size(410, 230);
+            this.vspStream.TabIndex = 12;
+            this.vspStream.VideoSource = null;
             // 
             // Cam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(699, 292);
-            this.Controls.Add(this.picPicture);
+            this.ClientSize = new System.Drawing.Size(697, 292);
+            this.Controls.Add(this.vspStream);
             this.Controls.Add(this.btnAbort);
             this.Controls.Add(this.btnResume);
             this.Controls.Add(this.gpxJustification);
@@ -271,7 +265,6 @@
             this.Load += new System.EventHandler(this.Cam_Load);
             this.gpxJustification.ResumeLayout(false);
             this.gpxJustification.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,6 +291,6 @@
         private System.Windows.Forms.Button btnJustification;
         private System.Windows.Forms.Button btnResume;
         private System.Windows.Forms.Button btnAbort;
-        private System.Windows.Forms.PictureBox picPicture;
+        private AForge.Controls.VideoSourcePlayer vspStream;
     }
 }

@@ -60,48 +60,20 @@ namespace bubblegum_sequencer
         private VideoCaptureDevice videoSource;//Videoquelle/Kamera
         private bool connection = false;//Wird beim ersten Verbindungsaufbau auf true gesetzt
 
-        public void stream_start(VideoCaptureDevice aVideoSource)
-        {
-            videoSource = aVideoSource;//Übernimmt neue Videoquelle
-
-            //Anpassung der picPicture an die Seitenverhältnisse der Auflösung
-            if (videoSource != null)
-            {
-                double aspectRatio;
-                if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
-                {
-                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
-                    picPicture.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-                }
-                else
-                {
-                    aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
-                    picPicture.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-                }
-
-                if (!connection)
-                {
-                    videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);//Verknüpft Videoquelle mit Event
-                    videoSource.Start();//Startet Videoquelle
-                    connection = true;
-                }
-                grid.setSize(picPicture.Size);
-                grid.calcIntersections();                
-            }
-        }//startet Stream
-
         //EVENTS
+        /*
         void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
         {
             source.Picture = (Bitmap)eventArgs.Frame.Clone();
             //HIER: Bildanalyse            
         }
+         * */
 
 
         //GUI
         private void kameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Cam Camoptions = new Cam(this, videoSource, source, grid);
+            Cam Camoptions = new Cam(this, source, grid);
             source.add(Camoptions);
 
             Camoptions.Show();
@@ -117,10 +89,10 @@ namespace bubblegum_sequencer
 
         private void MainControllerGui_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (videoSource != null && videoSource.IsRunning)//Webcam als Source wieder ausbinden
+            if (vspStream.IsRunning)//Stream beenden
             {
-                this.videoSource.SignalToStop();
-                this.videoSource = null;
+                vspStream.SignalToStop();
+                vspStream.WaitForStop();
             }
             Environment.Exit(0);//Alle Threads beenden
          }
@@ -131,15 +103,37 @@ namespace bubblegum_sequencer
 
             if (subject is VideoSource)
             {
-                picPicture.Image = ((VideoSource)subject).Picture;
-                if (picPicture.Image != null)
+                if (vspStream.IsRunning)//Beende alten Stream, falls vorhanden
                 {
-                    // Funktion zum einspeichern der abzuspielenden Töne #Pascal
-                    sequence.addColors(grid, (Bitmap)picPicture.Image);
-
-                    // Sequence beim Player aktualisieren #Pascal
-                    player.setSequence(sequence);
+                    vspStream.SignalToStop();
+                    vspStream.WaitForStop();
                 }
+
+                videoSource = ((VideoSource)subject).Source;//Übernimmt die neue Videoquelle
+
+                if (videoSource != null)
+                {
+                    //Anpassung der picPicture an die Seitenverhältnisse der Auflösung                
+                    double aspectRatio;
+                    if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
+                    {
+                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    }
+                    else
+                    {
+                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    }
+
+                    //Neu Vermessung des Gitters
+                    grid.setSize(vspStream.Size);
+                    grid.calcIntersections();
+                }
+                
+                //Starte neuen Stream
+                vspStream.VideoSource = ((VideoSource)subject).Source;
+                vspStream.Start();              
             }
 
 
@@ -170,21 +164,33 @@ namespace bubblegum_sequencer
             sequence.setBPM((int)numBPM.Value);
         }
 
-        private void picPicture_Paint(object sender, PaintEventArgs e)
-        {
-            if (chkGrid.Checked)
-            {
-                grid.draw(e.Graphics, picPicture.Size);
-            }
-        }
-
         private void btnGetColor_Click(object sender, EventArgs e)
         {
-            Color testcolor = grid.getColorAtIntersection(Convert.ToInt32(txtX.Text), Convert.ToInt32(txtY.Text), (Bitmap)picPicture.Image);
+            Color testcolor = grid.getColorAtIntersection(Convert.ToInt32(txtX.Text), Convert.ToInt32(txtY.Text), (Bitmap)vspStream.GetCurrentVideoFrame());
 
             txtColor.Text = "R:" + testcolor.R.ToString() + "| G:" + testcolor.G.ToString() + "| B:" + testcolor.B.ToString();
 
             btnGetColor.BackColor = testcolor;
+        }
+
+        private void vspStream_NewFrame(object sender, ref Bitmap image)//Wird bei jedem neuen Bild ausgelöst
+        {
+            if (image != null)
+            {
+                // Funktion zum einspeichern der abzuspielenden Töne #Pascal
+                sequence.addColors(grid, (Bitmap)image);
+
+                // Sequence beim Player aktualisieren #Pascal
+                player.setSequence(sequence);
+            }
+        }
+
+        private void vspStream_Paint(object sender, PaintEventArgs e)//Wird bei jeder neuzeichnung des Players ausgelöst
+        {
+            if (chkGrid.Checked)
+            {
+                grid.draw(e.Graphics, vspStream.Size);
+            }
         }
 
         //COLOR-TONE-MAP-CONTROLLER
@@ -322,6 +328,6 @@ namespace bubblegum_sequencer
             }
 
             ColorTone_Refresh();
-        }
+        }       
     }
 }

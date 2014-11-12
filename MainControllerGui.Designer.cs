@@ -40,7 +40,6 @@
             this.btnPause = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.chkGrid = new System.Windows.Forms.CheckBox();
-            this.picPicture = new System.Windows.Forms.PictureBox();
             this.lstColorTone = new System.Windows.Forms.ListBox();
             this.mnuBar = new System.Windows.Forms.MenuStrip();
             this.mnuBarFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,10 +62,10 @@
             this.txtColor = new System.Windows.Forms.TextBox();
             this.cbxInstrument = new System.Windows.Forms.ComboBox();
             this.cbxPitch = new System.Windows.Forms.ComboBox();
+            this.vspStream = new AForge.Controls.VideoSourcePlayer();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).BeginInit();
             this.mnuBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -191,18 +190,6 @@
             this.chkGrid.TabIndex = 1;
             this.chkGrid.Text = "Gitter";
             this.chkGrid.UseVisualStyleBackColor = true;
-            // 
-            // picPicture
-            // 
-            this.picPicture.BackColor = System.Drawing.Color.DarkGray;
-            this.picPicture.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picPicture.BackgroundImage")));
-            this.picPicture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPicture.Location = new System.Drawing.Point(283, 38);
-            this.picPicture.Name = "picPicture";
-            this.picPicture.Size = new System.Drawing.Size(562, 316);
-            this.picPicture.TabIndex = 2;
-            this.picPicture.TabStop = false;
-            this.picPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.picPicture_Paint);
             // 
             // lstColorTone
             // 
@@ -382,11 +369,23 @@
             this.cbxPitch.TabIndex = 10;
             this.cbxPitch.SelectedIndexChanged += new System.EventHandler(this.cbxPitch_SelectedIndexChanged);
             // 
+            // vspStream
+            // 
+            this.vspStream.Location = new System.Drawing.Point(283, 38);
+            this.vspStream.Name = "vspStream";
+            this.vspStream.Size = new System.Drawing.Size(562, 316);
+            this.vspStream.TabIndex = 11;
+            this.vspStream.Text = "Stream";
+            this.vspStream.VideoSource = null;
+            this.vspStream.NewFrame += new AForge.Controls.VideoSourcePlayer.NewFrameHandler(this.vspStream_NewFrame);
+            this.vspStream.Paint += new System.Windows.Forms.PaintEventHandler(this.vspStream_Paint);
+            // 
             // MainControllerGui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(857, 452);
+            this.Controls.Add(this.vspStream);
             this.Controls.Add(this.cbxPitch);
             this.Controls.Add(this.cbxInstrument);
             this.Controls.Add(this.txtColor);
@@ -394,7 +393,6 @@
             this.Controls.Add(this.txtY);
             this.Controls.Add(this.txtX);
             this.Controls.Add(this.lstColorTone);
-            this.Controls.Add(this.picPicture);
             this.Controls.Add(this.chkGrid);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mnuBar);
@@ -407,7 +405,6 @@
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBPM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbVolume)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picPicture)).EndInit();
             this.mnuBar.ResumeLayout(false);
             this.mnuBar.PerformLayout();
             this.ResumeLayout(false);
@@ -424,7 +421,6 @@
         private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.CheckBox chkGrid;
-        private System.Windows.Forms.PictureBox picPicture;
         private System.Windows.Forms.ListBox lstColorTone;
         private System.Windows.Forms.MenuStrip mnuBar;
         private System.Windows.Forms.ToolStripMenuItem mnuBarFile;
@@ -451,6 +447,7 @@
         private System.Windows.Forms.TextBox txtColor;
         private System.Windows.Forms.ComboBox cbxInstrument;
         private System.Windows.Forms.ComboBox cbxPitch;
+        private AForge.Controls.VideoSourcePlayer vspStream;
     }
 }
 

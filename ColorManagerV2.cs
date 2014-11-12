@@ -54,7 +54,7 @@ namespace bubblegum_sequencer
         private void btnAddColor_Click(object sender, EventArgs e)
         {
             // Pruefen, ob Kamerabild da ist #Parasixx
-            if (source.Picture == null)
+            if (source.Source == null)
             {
                 MessageBox.Show(this, "Bitte in den Kameraeinstellungen die Kamera auswählen, um die Farbe einzuscannen.", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
