@@ -21,21 +21,7 @@ namespace bubblegum_sequencer
             source = aSource;
         }
 
-        public void update(IObserverable subject)
-        {
-            colorlist = (ColorList)subject;
-            ColorListRefresh();
-        }
-
-        private void ColorListRefresh()//Refresh für die ColorList
-        {
-            lstColors.Items.Clear();
-            for (int i = 0; i < colorlist.getCount(); i++)
-            {
-                lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorname(i));
-            }
-        }
-
+        //FARBVERWALTUNG
         private void lstColors_SelectedIndexChanged(object sender, EventArgs e)
         {
             int i = lstColors.SelectedIndex;
@@ -50,7 +36,6 @@ namespace bubblegum_sequencer
 
             //txtReadingcount.Text = colorlist.getReadingcount(i).ToString();//Ruft Messanzahl des ausgewählten Elements ab
         }
-
         private void btnAddColor_Click(object sender, EventArgs e)
         {
             // Pruefen, ob Kamerabild da ist #Parasixx
@@ -67,7 +52,6 @@ namespace bubblegum_sequencer
 
             colorinsert.Show();
         }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (lstColors.SelectedIndex >= 0)//Wenn eine Farbe ausgewählt ist...
@@ -89,8 +73,7 @@ namespace bubblegum_sequencer
             {
                 MessageBox.Show(this, "Bitte wählen Sie erst eine zu löschende Farbe aus.", "Keine Farbe ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Error);//...Fehlermeldung
             }
-        }   
-
+        }
         private void txtColorname_KeyDown(object sender, KeyEventArgs e)//Ändert Farbname
         {
             if (e.KeyCode == Keys.Return)//Wenn Return gedrückt wurde
@@ -112,6 +95,22 @@ namespace bubblegum_sequencer
             }
         }       
 
+        //OBSERVERPATTERN
+        public void update(IObserverable subject)
+        {
+            colorlist = (ColorList)subject;
+            ColorListRefresh();
+        }
+        private void ColorListRefresh()//Refresh für die ColorList
+        {
+            lstColors.Items.Clear();
+            for (int i = 0; i < colorlist.getCount(); i++)
+            {
+                lstColors.Items.Add((i + 1).ToString() + ". | " + colorlist.getColorname(i));
+            }
+        }
+
+        //FARBVERWALTUNG SCHLIESSEN        
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();

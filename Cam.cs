@@ -16,16 +16,14 @@ namespace bubblegum_sequencer
 {
     public partial class Cam : Form, IObserver
     {
+        //GLOBALE VARIABLEN(FORMINTERN)
         private MainControllerGui mainController;
         VideoCaptureDevice videoSource;//Videoquelle/Kamera
-        VideoCapabilities oldResolution;
-        string oldMonkierString;
         VideoSource source;
         public Grid grid;
         FilterInfoCollection videosources;//Kameraliste
-        Bitmap picture;//Aktuelles Bild/aktueller Frame
-        bool firstConnection = true;//Gibt an, ob es sich um die erste Verbindung mit einer Kamera handelt(Cam_Load)
 
+        //FORM INITIEREN
         public Cam(MainControllerGui form, VideoSource aSource, Grid aGrid)
         {
             InitializeComponent();
@@ -44,9 +42,7 @@ namespace bubblegum_sequencer
             videoSource = source.Source;
            
             grid = aGrid;
-        }
-        
-        //EVENTS
+        }               
         private void Cam_Load(object sender, EventArgs e)
         {
             videosources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
@@ -58,7 +54,6 @@ namespace bubblegum_sequencer
 
             if (videoSource != null)//Falls bereits eine Kamera ausgewählt wurde, wird diese hier geladen
             {
-                firstConnection = false;
                 for (int i = 0; i < videosources.Count; i++)//Sucht die bereits gewählte Kamera in den Sources und wählt diese in cbxCam aus
                 {
                     VideoCaptureDevice tempVideoSource = new VideoCaptureDevice(videosources[i].MonikerString);//Zapft Videoquelle kurz an
@@ -72,28 +67,7 @@ namespace bubblegum_sequencer
             }
         }
 
-        //FUNCTIONS
-        /*
-        void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)//VERALTET
-        {
-            
-            picture = (Bitmap)eventArgs.Frame.Clone();
-
-            source.Picture = picture;      
-             
-        }
-         * */
-
-        //GUI
-        private void btnAbort_Click(object sender, EventArgs e)
-        {
-            //Beendet Player
-            vspStream.SignalToStop();
-            vspStream.WaitForStop();
-
-            this.Close();
-        }
-
+        //KAMERA- UND AUFLÖSUNGSAUSWAHL            
         private void cbxCam_SelectedIndexChanged(object sender, EventArgs e)//Wenn eine Kamera ausgewählt wird
         {
             videoSource = new VideoCaptureDevice(videosources[cbxCam.SelectedIndex].MonikerString);//Legt Videoquelle anhand der ausgewählten Kamera aus cbxCam fest
@@ -130,7 +104,6 @@ namespace bubblegum_sequencer
             }
             catch { }
         }
-
         private void cbxResolution_SelectedIndexChanged(object sender, EventArgs e)//Auflösung festlegen und Video starten
         {
             string selectedItem = cbxResolution.SelectedItem.ToString();
@@ -158,32 +131,30 @@ namespace bubblegum_sequencer
                 }
             }
 
-            //Video starten
-            //if (!connection)
-            
-                //videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(videoSource_NewFrame);
-                vspStream.VideoSource = videoSource;
-                //videoSource.Start();
-                vspStream.Start();
-
-                //videoSource.Start();
-            
+            vspStream.VideoSource = videoSource;
+            vspStream.Start();            
         }
 
-        private void Cam_FormClosed(object sender, FormClosedEventArgs e)
+        //JUSTIERUNG
+        private void btnJustification_Click(object sender, EventArgs e)
         {
-            /* WIRD NUR NOCH BEI KOMPLETTER PROGRAMM BEENDUNG GESCHLOSSEN
-            if (videoSource != null && videoSource.IsRunning)//Webcam als Source wieder ausbinden
-            {
-                videoSource.SignalToStop();
-                videoSource = null;
-            }
-             * */
+            grid.Cols = Convert.ToInt32(txtColumns.Text);
+            grid.Rows = Convert.ToInt32(txtRows.Text);
         }
 
+        //OBSERVERPATTERN        
+        public void update(IObserverable subject)
+        {
+            //picPicture.Image = ((VideoSource)subject).Picture;
+
+
+            //HIER: Bildanalyse
+        }
+        
+        //BEENDEN
         private void btnResume_Click(object sender, EventArgs e)
         {
-            if (cbxCam.SelectedItem.ToString() != "")//Nur wenn eine Kamera ausgewählt wurde
+            if (cbxCam.SelectedItem != null)//Nur wenn eine Kamera ausgewählt wurde
             {
                 source.Source = videoSource;
 
@@ -193,24 +164,18 @@ namespace bubblegum_sequencer
             {
                 MessageBox.Show("Bitte wählen Sie erst eine Kamera aus!", "keine Kamera ausgewählt", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
-
-        public void update(IObserverable subject)
+        private void btnAbort_Click(object sender, EventArgs e)
         {
-            //picPicture.Image = ((VideoSource)subject).Picture;
-
-
-            //HIER: Bildanalyse
+            this.Close();
         }
-
-        private void btnJustification_Click(object sender, EventArgs e)
-        {           
-            grid.Cols = Convert.ToInt32(txtColumns.Text);
-            grid.Rows = Convert.ToInt32(txtRows.Text);
+        private void Cam_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (vspStream.IsRunning)//Stream beenden
+            {
+                vspStream.SignalToStop();
+                vspStream.WaitForStop();
+            }
         }
     }
 }
-/*
-Führt void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs) immer da aus, wo es zuletzt hinzugefügt wurde
-*/

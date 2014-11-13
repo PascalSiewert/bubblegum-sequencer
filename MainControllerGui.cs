@@ -41,15 +41,6 @@ namespace bubblegum_sequencer
             colorList.add(this);          
 
             output = OutputDevice.InstalledDevices[0];
-      
-            //TEST BEGINN
-            /*
-            colorToneMap.addColor(new Tone(Pitch.D4, Instrument.AcousticGrandPiano), Color.Black);
-            colorToneMap.addColor(new PercussionTone(Percussion.SnareDrum1), Color.Gray);
-            colorToneMap.addColor(new Tone(Pitch.A4, Instrument.AcousticGuitarSteel), Color.Blue);
-             */
-            ColorTone_Refresh();
-            //TEST ENDE
 
             Tones_Refresh();
             sequence = new Sequence(colorToneMap, (int)numBPM.Value);
@@ -58,19 +49,8 @@ namespace bubblegum_sequencer
         }
 
         private VideoCaptureDevice videoSource;//Videoquelle/Kamera
-        private bool connection = false;//Wird beim ersten Verbindungsaufbau auf true gesetzt
 
-        //EVENTS
-        /*
-        void videoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
-        {
-            source.Picture = (Bitmap)eventArgs.Frame.Clone();
-            //HIER: Bildanalyse            
-        }
-         * */
-
-
-        //GUI
+        //MENUE
         private void kameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cam Camoptions = new Cam(this, source, grid);
@@ -78,121 +58,28 @@ namespace bubblegum_sequencer
 
             Camoptions.Show();
         }
-
         private void farbverwaltungToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorManagerV2 colorManager = new ColorManagerV2(source);
             colorList.add(colorManager);
 
             colorManager.Show();
-        }
-
-        private void MainControllerGui_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (vspStream.IsRunning)//Stream beenden
-            {
-                vspStream.SignalToStop();
-                vspStream.WaitForStop();
-            }
-            Environment.Exit(0);//Alle Threads beenden
-         }
-
-        public void update(IObserverable subject)
-        {
-            //HIER: Bildanalyse   
-
-            if (subject is VideoSource)
-            {
-                if (vspStream.IsRunning)//Beende alten Stream, falls vorhanden
-                {
-                    vspStream.SignalToStop();
-                    vspStream.WaitForStop();
-                }
-
-                videoSource = ((VideoSource)subject).Source;//Übernimmt die neue Videoquelle
-
-                if (videoSource != null)
-                {
-                    //Anpassung der picPicture an die Seitenverhältnisse der Auflösung                
-                    double aspectRatio;
-                    if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
-                    {
-                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
-                        vspStream.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-                    }
-                    else
-                    {
-                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
-                        vspStream.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
-                    }
-
-                    //Neu Vermessung des Gitters
-                    grid.setSize(vspStream.Size);
-                    grid.calcIntersections();
-                }
-                
-                //Starte neuen Stream
-                vspStream.VideoSource = ((VideoSource)subject).Source;
-                vspStream.Start();              
-            }
-
-
-            if (subject is Grid)
-            {
-                grid = (Grid)subject;
-            }
-
-            if (subject is ColorList)
-            {
-                colorList = (ColorList)subject;
-                ColorTone_Refresh();
-            }
-        }
-
+        }        
+        
+        //TONECONTROLLER
         private void btnPlay_Click(object sender, EventArgs e)
         {
             player.startPlayer();
         }
-
         private void btnStop_Click(object sender, EventArgs e)
         {
             player.stopPlayer();
         }
-
         private void numBPM_ValueChanged(object sender, EventArgs e)
         {
             sequence.setBPM((int)numBPM.Value);
         }
-
-        private void btnGetColor_Click(object sender, EventArgs e)
-        {
-            Color testcolor = grid.getColorAtIntersection(Convert.ToInt32(txtX.Text), Convert.ToInt32(txtY.Text), (Bitmap)vspStream.GetCurrentVideoFrame());
-
-            txtColor.Text = "R:" + testcolor.R.ToString() + "| G:" + testcolor.G.ToString() + "| B:" + testcolor.B.ToString();
-
-            btnGetColor.BackColor = testcolor;
-        }
-
-        private void vspStream_NewFrame(object sender, ref Bitmap image)//Wird bei jedem neuen Bild ausgelöst
-        {
-            if (image != null)
-            {
-                // Funktion zum einspeichern der abzuspielenden Töne #Pascal
-                sequence.addColors(grid, (Bitmap)image);
-
-                // Sequence beim Player aktualisieren #Pascal
-                player.setSequence(sequence);
-            }
-        }
-
-        private void vspStream_Paint(object sender, PaintEventArgs e)//Wird bei jeder neuzeichnung des Players ausgelöst
-        {
-            if (chkGrid.Checked)
-            {
-                grid.draw(e.Graphics, vspStream.Size);
-            }
-        }
-
+        
         //COLOR-TONE-MAP-CONTROLLER
         private void ColorTone_Refresh()
         {
@@ -330,11 +217,106 @@ namespace bubblegum_sequencer
             ColorTone_Refresh();
         }
 
+        //VIDEOSOURCEPLAYER(VSP)
+        private void vspStream_NewFrame(object sender, ref Bitmap image)//Wird bei jedem neuen Bild ausgelöst
+        {
+            if (image != null)
+            {
+                // Funktion zum einspeichern der abzuspielenden Töne #Pascal
+                sequence.addColors(grid, (Bitmap)image);
+
+                // Sequence beim Player aktualisieren #Pascal
+                player.setSequence(sequence);
+            }
+        }
+        private void vspStream_Paint(object sender, PaintEventArgs e)//Wird bei jeder neuzeichnung des Players ausgelöst
+        {
+            if (chkGrid.Checked)
+            {
+                grid.draw(e.Graphics, vspStream.Size);
+            }
+        }
+
+        //OBSERVERPATTERN
+        public void update(IObserverable subject)
+        {
+            //HIER: Bildanalyse   
+
+            if (subject is VideoSource)
+            {
+                if (vspStream.IsRunning)//Beende alten Stream, falls vorhanden
+                {
+                    vspStream.SignalToStop();
+                    vspStream.WaitForStop();
+                }
+
+                videoSource = ((VideoSource)subject).Source;//Übernimmt die neue Videoquelle
+
+                if (videoSource != null)
+                {
+                    //Anpassung der picPicture an die Seitenverhältnisse der Auflösung                
+                    double aspectRatio;
+                    if (((Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height)) * 316) < 562)
+                    {
+                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Width = Convert.ToInt32(aspectRatio * 316);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    }
+                    else
+                    {
+                        aspectRatio = Convert.ToDouble(videoSource.VideoResolution.FrameSize.Height) / Convert.ToDouble(videoSource.VideoResolution.FrameSize.Width);//Berechnung mit Double um Nachkommastellen zu beachten
+                        vspStream.Height = Convert.ToInt32(aspectRatio * 562);//Berechnet die passende Breite für die picPicture nach dem Seitenverhältnis(aspectRatio)
+                    }
+
+                    //Neu Vermessung des Gitters
+                    grid.setSize(vspStream.Size);
+                    grid.calcIntersections();
+                }
+
+                //Starte neuen Stream
+                vspStream.VideoSource = ((VideoSource)subject).Source;
+                vspStream.Start();
+            }
+
+
+            if (subject is Grid)
+            {
+                grid = (Grid)subject;
+            }
+
+            if (subject is ColorList)
+            {
+                colorList = (ColorList)subject;
+                ColorTone_Refresh();
+            }
+        }
+
+        //GRID
         private void chkGrid_CheckedChanged(object sender, EventArgs e)
         {
             // Grid neuzeichnen, wenn Checkbox geklickt #Pascal
             vspStream.Invalidate();
             vspStream.Update();
+        }
+
+        //FORM SCHLIESSEN
+        private void MainControllerGui_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (vspStream.IsRunning)//Stream beenden
+            {
+                vspStream.SignalToStop();
+                vspStream.WaitForStop();
+            }
+            Environment.Exit(0);//Alle Threads beenden
+        }
+
+        //TESTFUNKTIONEN
+        private void btnGetColor_Click(object sender, EventArgs e)
+        {
+            Color testcolor = grid.getColorAtIntersection(Convert.ToInt32(txtX.Text), Convert.ToInt32(txtY.Text), (Bitmap)vspStream.GetCurrentVideoFrame());
+
+            txtColor.Text = "R:" + testcolor.R.ToString() + "| G:" + testcolor.G.ToString() + "| B:" + testcolor.B.ToString();
+
+            btnGetColor.BackColor = testcolor;
         }       
     }
 }

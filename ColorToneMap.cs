@@ -18,6 +18,7 @@ namespace bubblegum_sequencer
             colors = new List<Color>();
         }
 
+        //ZUORDNUNGSVERWALTUNG
         public bool addColor(Tone key, Color color)//Farb-Ton-Zuordnung hinzufügen
         {
             bool success = false;
@@ -31,7 +32,6 @@ namespace bubblegum_sequencer
 
             return success;
         }
-
         public bool modifyToneByID(int id, Tone key)//Ändert Ton bei bestimmter Kombination
         {
             bool success = false;
@@ -41,7 +41,6 @@ namespace bubblegum_sequencer
 
             return success;
         }
-
         public bool deleteColorToneByColor(Color aColor)//Löscht Farb-Ton-Zuordnung nach Angabe der Farbe(Ungetestet)
         {
             bool success = false;
@@ -58,7 +57,6 @@ namespace bubblegum_sequencer
 
             return success;
         }
-
         /// <summary>
         ///  Löscht eine Ton-Farb-Zuordnung in der Map
         /// </summary>
@@ -79,6 +77,7 @@ namespace bubblegum_sequencer
             return success;
         }
 
+        //INFORMATIONSAUSGABE
         public Tone getToneByColor(Color by)//Ton nach Farbe erhalten
         {
             bool foundColor = false;
@@ -108,17 +107,14 @@ namespace bubblegum_sequencer
 
             return tone;
         }
-
         public Color getColorByID(int i)
         {
             return colors[i];
         }
-
         public Tone getToneAt(int index)//Ton nach Index erhalten
         {
             return tones[index];
         }
-
         public int getSize()
         {
             int size = (tones.Count > colors.Count) ? colors.Count : tones.Count;

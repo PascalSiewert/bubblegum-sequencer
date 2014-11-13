@@ -20,7 +20,7 @@ namespace bubblegum_sequencer
             InitializeComponent();
         }
 
-        //Bild "einfangen"
+        //OBSERVERPATTERN
         public void update(IObserverable subject)
         {
             if (subject is VideoSource)
@@ -59,7 +59,7 @@ namespace bubblegum_sequencer
             }
         }
 
-        //Farbe ermitteln
+        //FARBE ERMITTELN
         private void vspStream_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Point measurePoint = e.Location;//getBitmapPoint(e.Location);
@@ -74,8 +74,7 @@ namespace bubblegum_sequencer
 
             //gemessene Farbe in Panel anzeigen
             pnlMeasureColor.BackColor = color;
-        }
-        
+        }        
         private Point getBitmapPoint(Point picPoint, Bitmap picture)
         {
             Point bitPoint = new Point();            
@@ -87,8 +86,7 @@ namespace bubblegum_sequencer
             return bitPoint;
         }//Mausposition auf picPicture in Mausposition auf Bitmap umrechnen
         
-
-        //Messung in Farbe kopieren
+        //MESSUNG IN FARBE KOPIEREN
         private void btnGetMeasure_Click(object sender, EventArgs e)
         {
             txtRed.Text = txtMeasureRed.Text;
@@ -96,7 +94,7 @@ namespace bubblegum_sequencer
             txtBlue.Text = txtMeasureBlue.Text;
         }
 
-        //Farbpanel aktualisieren und Werte überprüfen
+        //FARBPANEL AKTUALISIEREN UND WERTE ÜBERPRÜFEN
         private void pnlColor_Refresh()//aktuelle Farbe in Panel anzeigen  
         {
             pnlColor.BackColor = Color.FromArgb(Convert.ToInt32(txtRed.Text), Convert.ToInt32(txtGreen.Text), Convert.ToInt32(txtBlue.Text));
@@ -166,9 +164,9 @@ namespace bubblegum_sequencer
                 MessageBox.Show(this, "Aufgrund eines ungültigen Zeichens wird der Wert auf 255 gesetzt!", "Falsche Eingabe!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtBlue.Text = "255";
             }
-        }
+        }        
 
-        //neue Farbe hinzufügen und Form schließen
+        //FORM SCHLIESSEN(auch wenn eine Farbe hinzugefügt wird)
         private void btnInsertColor_Click(object sender, EventArgs e)
         {
             if (txtColorname.Text != "")//Überprüfen ob ein Farbname gegeben wurde
@@ -189,13 +187,10 @@ namespace bubblegum_sequencer
                 MessageBox.Show(this, "Bitte legen Sie erst einen bisher ungebrauchten Farbnamen fest.", "Kein Farbname!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        //Form schließen(keine neue Farbe)
         private void btnAbort_Click(object sender, EventArgs e)
         {
             this.Close();          
         }
-
         private void ColorInsertALPHA_FormClosing(object sender, FormClosingEventArgs e)
         {
             source.delete(this);//Als Beobachter austragen
